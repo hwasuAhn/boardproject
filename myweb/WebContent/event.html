@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title> event.html </title>
+<link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+</head>
+<script type="text/javascript">
+function closeWin() {
+	//자바스크립트의 최상의 객체 window
+	//window객체명은 생략가능
+	if(document.pop.PopCookie.checked)
+	{
+		//체크할 경우 쿠키설정
+		//setCookie("변수명", "값", 유지할 기간);
+		setCookie("popcookie", "done", 1);
+	}
+	window.close();	
+}  //closeWin() end
+
+function setCookie( name, value, expiredays ) { 
+	var todayDate = new Date(); 
+	todayDate.setDate( todayDate.getDate() + expiredays ); 
+	document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
+}  // setCookie() end
+</script>
+<body>
+	<form name="pop">
+		<table width="310" border="0">
+		<tr>
+			<td colspan="2">			
+				<img src="./images/im_move.gif"/>
+			</td>
+		</tr>	
+		<tr>
+			<td><input type="checkbox" name="PopCookie">
+			오늘 하루 이창을 열지 않음</td>
+		</tr>
+		<tr>
+		<td>
+			<a href="javascript:closeWin()">[닫기]</a></td>
+		</tr>		
+		</table>		
+	</form>
+</body>
+</html>

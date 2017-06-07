@@ -1,0 +1,104 @@
+body{
+	font-family:dotum.helvetica,sans-serif,돋움체;
+	font-size:12px;
+	color:#000000;
+	
+}
+
+
+
+img{ 
+	border:0px;
+/*이미지 투명하게*/
+/*filter:alpha(opacity=70);
+  opacity: 0.7;
+  -moz-opacity:0.3;
+  */
+}
+
+A:link {text-decoration:none; color:black;}
+A:visited {text-decoration:none; color:black;}
+A:action {text-decoration:underline; color:black;}
+A:hover {text-decoration:underline; color:#0033cc;}
+
+#wrap {
+  background-color:#ffffff; /*배경색*/
+  width:800px; /*영역 가로 크기*/
+  margin:0 auto;    
+}
+
+#header {
+  width:800px;
+  background-color:#ffffff; 
+  
+}
+
+#container {
+  position:relative;
+  height:500px;
+  background-color:#ffffff; 
+}
+
+#nav {
+  float:left; /*영역내 영역 왼쪽 정렬*/
+  width:140px;
+  background-color:#ffffff; 
+ 
+}
+
+#content {
+  float:right;
+  width:650px;
+  background-color:#ffffff;
+}
+
+#footer {
+  position:relative;
+  text-align:center;
+  height:30px;
+  background-color:#ecedf0; 
+  
+  
+  
+}
+
+#scrollbar {
+	scrollbar-face-color: #eeeeee; 
+	scrollbar-highlight-color: #eeeeee; /*  ┌ 모양 부분 안쪽 */
+	scrollbar-3dlight-color: #cccccc;   /* ┌ 모양 부분 바깥쪽 */ 
+	scrollbar-darkshadow-color: #cccccc; /* └모양 부분 바깥쪽 */
+	scrollbar-shadow-color: #eeeeee;    /* └모양 부분 안쪽 */
+	scrollbar-track-color: #bbbbff;   
+	scrollbar-arrow-color: #acb890;
+
+}
+
+.line{
+    border:solid 1px #000000;
+}
+
+.btn{   /* 버튼 스타일 */
+    border-bottom:#4e8df5 1px solid;
+    border-left:#4e8df5 1px solid;
+    border-right:#4e8df5 1px solid;
+    border-top:#4e8df5 1px solid;
+    color:#3255a5;
+    font-size:10pt;
+    
+    background-color:#ecedf3;
+}
+
+.clock{
+	background-color:#ffffff;
+	border:0px;
+	color:#0033cc;
+	font-weight:bold;
+}
+
+.time {
+	background-color: #ffffff;  /*배경색*/
+	border: 0px;  /*선굵기*/
+	color: #3366cc;  /*선색*/
+	font-weight: bold;  /*진하게*/
+	font-size: 12px;
+}
