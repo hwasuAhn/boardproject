@@ -27,13 +27,12 @@ public class LoginProAction extends HttpServlet implements CommandAction {
 		dto=dbPro.loginlevel(id, passwd); 
 		System.out.println("res : "+res);
 		//System.out.println("dto : "+dto);
-		//request영역에 자료 올리기
+
 		req.setAttribute("res", new Integer(res));
 		//req.setAttribute("dto", dto.getMlevel());
 		req.setAttribute("id", id);
-		//req.setAttribute("passwd", passwd);
+
 		
-		//session영역에 자료 올리기
 		req.getSession().setAttribute("s_id2", id);
 		//req.getSession().setAttribute("s_passwd2", passwd);
 		if(dto!=null)
@@ -42,9 +41,8 @@ public class LoginProAction extends HttpServlet implements CommandAction {
 			req.getSession().setAttribute("s_mlevel", mlevel);
 		}
 		
-		//아이디 쿠키저장-----------------------------
 		String c_id=req.getParameter("c_id");
-		//Checkbox에 체크를 하면 SAVE, 안하면 빈값
+
 		if(c_id==null)
 		{
 			c_id="";
@@ -53,18 +51,16 @@ public class LoginProAction extends HttpServlet implements CommandAction {
 		Cookie cookie=null;
 		if(c_id.equals("SAVE"))
 		{
-			//Checkbox를 선택해 쿠키를 저장할 경우
 			cookie=new Cookie("c_id", id);
-			cookie.setMaxAge(60*60*24*31);  //1달동안 쿠키저장
+			cookie.setMaxAge(60*60*24*31);
 		}
 		else
 		{
-			//Checkbox를 선택하지않아 쿠키를 저장하지 않을 경우
 			cookie=new Cookie("c_id", "");
 			cookie.setMaxAge(0);  //0second
 		}
 		
-		resp.addCookie(cookie);  //사용자PC에 쿠키값 저장
+		resp.addCookie(cookie);
 		//----------------------------------------------		
 
 		

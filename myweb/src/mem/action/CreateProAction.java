@@ -37,7 +37,6 @@ public class CreateProAction extends HttpServlet implements CommandAction {
 		int res=0;
 		res=dbPro.insertmem(dto);
 		
-		//System.out.println("회원가입 res : "+res);
 		
 		req.setAttribute("res", res);
 		return "/mvc2member/createPro.jsp";

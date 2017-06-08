@@ -27,7 +27,7 @@ public class ListAction implements CommandAction{
 		BoardDBBean dbPro = BoardDBBean.getInstance();
 		count=dbPro.getArticleCount();
 		
-		String today=www.utility.Utility.getDate();  //¿À´Ã ³¯Â¥
+		String today=www.utility.Utility.getDate();  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
 		
 		if(count>0)
 		{
@@ -40,7 +40,6 @@ public class ListAction implements CommandAction{
 		
 		number = count-(currentPage-1)*pageSize;
 		
-		//request¿µ¿ª¿¡ ÀúÀå
 		req.setAttribute("currentPage", new Integer(currentPage));
 		req.setAttribute("startRow", new Integer(startRow));
 		req.setAttribute("endRow", new Integer(endRow));

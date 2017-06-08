@@ -20,7 +20,9 @@ function Go_File(filenm)
  * 게시판관리 *
  <FORM name=myform METHOD=POST>
 <INPUT TYPE="button" VALUE="게시판" ONCLICK="Go_File('bbs_list.jsp')">	
+<!--  
 <INPUT TYPE="button" VALUE="첨부형 게시판" ONCLICK="Go_File('pds_list.jsp')">	
+-->
  </FORM> 
  </BODY>
 </HTML>

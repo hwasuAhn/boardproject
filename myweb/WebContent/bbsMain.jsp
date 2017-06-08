@@ -1,20 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%
-	//로그인 성공여부 판단
-	//세션변수값 가져오기
-	String s_id="", s_passwd="";
-	if(session.getAttribute("s_id")!=null)
-	{
-		s_id=(String)session.getAttribute("s_id");
-		s_passwd=(String)session.getAttribute("s_passwd");
-	}
-	else
-	{
-		s_id="guest";
-		s_passwd="guest";
-	}
-%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:if test="${sessionScope.s_id2 != null }">
+	<c:set var="memid" value="${sessionScope.s_id2 }" scope="session"/>
+	<c:set var="s_mlevel" value="${sessionScope.s_mlevel }" scope="session"/>
+</c:if>
+<c:if test="${sessionScope.s_id2 == null}">
+	<c:set var="memid" value="guest" scope="session"/>
+	<c:set var="s_mlevel" value="guest" scope="session"/>
+</c:if> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,17 +43,18 @@
 		<div id="header">
 			<!-- 머리말 영역 -->
 			<table width="100%" border="0">
-			<tr>
+			<tr>				
 				<td>&nbsp;</td>
 				<td align="right">
 				<a href="/myweb/index.jsp"><img src="../images/top_bt_home.gif"/></a>
-				<%if(s_id.equals("guest") || s_id.equals("")) { %>
-				<a href="../member/loginForm.jsp"><img src="../images/top_bt_login.gif"/></a>
-				<a href="../member/agreement.jsp"><img src="../images/top_bt_join.gif"/></a>
-				<%} else {%>
-				<a href="../member/logout.jsp"><img src="../images/top_bt_logout.gif"/></a>
-				<a href="../member/loginForm.jsp"><img src="../images/top_mypage.gif"/></a>
-				<%} %>
+				<c:if test="${memid == 'guest' || memid == null }">
+				<a href="../mvc2member/loginForm.do"><img src="../images/top_bt_login.gif"/></a>
+				<a href="../mvc2member/agreement.do"><img src="../images/top_bt_join.gif"/></a>
+				</c:if>
+				<c:if test="${memid != 'guest' }">
+				<a href="../mvc2member/logout.do"><img src="../images/top_bt_logout.gif"/></a>
+				<a href="../mvc2member/loginForm.do"><img src="../images/top_mypage.gif"/></a>
+				</c:if>
 				</td>
 			</tr>
 			<tr bgcolor="#99ccff"><td colspan="2" height="1"></td></tr>
@@ -75,26 +72,20 @@
 				<img src="../images/board.gif"/>
 				<table border="0" width="100%" bgcolor="#ffffff">
 				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../bbs/bbsList.jsp">게시판</a></td>
-				</tr>
-				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/list.do">게시판(MVC)</a></td>
-				</tr>
-				<tr>
 					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../notice/noticeList.jsp">공지사항</a></td>
 				</tr>
 				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../pds/pdsList.jsp">첨부형 게시판</a></td>
+					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../bbs/bbsList.jsp">익명 게시판</a></td>
+				</tr>
+				<tr>
+					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/list.do">익명 게시판(MVC)</a></td>
 				</tr>
 				</table>
 				<br/>				
 				<img src="../images/member.gif"/>
 				<table border="0" width="100%" bgcolor="#ffffff">
 				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../member/loginForm.jsp">회원</a></td>
-				</tr>
-				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2member/loginForm.do">회원(MVC)</a></td>
+					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2member/loginForm.do">회원</a></td>
 				</tr>
 				<tr>
 					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mail/mailForm.jsp">문의메일보내기</a></td>

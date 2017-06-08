@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="../main.jsp"/>
 <div id="content" align="center">
-	<!--  -->
 	<!-- 본문 시작 -->
 	<img src="../images/j_board_notice_mvc.gif"/><br/><br/>
 	<div id="scrollbar" style="width:620px; height:380px; overflow:auto; padding:10px; border:0; 
@@ -59,12 +58,14 @@
 				<td width='120' class='tabletd'>${date}</td>
 			</tr>
 			</c:forEach>
+			
 			<tr>
 				<td height="30" colspan="2" align="left">총&nbsp;&nbsp;<font color='blue'><strong>${count}</strong></font> 개의 게시물이 있습니다</td>
 				<td></td>
 			    <td></td>
 			    <td><a href="/myweb/mvc2bbs/writeForm.do"><img src="../images/bt_write.gif" border="0"/></a></td>
 			 </tr>		
+			
 	</table>
 	<br/>
 </c:if>

@@ -1,12 +1,15 @@
-<%@page import="www.pds.PdsDTO"%>
-<%@page import="www.bbs.BbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="www.notice.*"%>
 <%@ page import="www.utility.*"%>
 <%@ page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="www.pds.PdsDTO"%>
+<%@page import="www.bbs.BbsDTO"%>
 <% request.setCharacterEncoding("euc-kr"); %>
 <jsp:useBean id="noticeDto" class="www.notice.NoticeDTO" scope="page"/>
 <jsp:useBean id="noticeDao" class="www.notice.NoticeDAO" scope="page"/>
@@ -29,21 +32,14 @@ if(request.getParameter("nowPage")!=null)
 	nowPage=Integer.parseInt(request.getParameter("nowPage"));
 }
 %>
-<%
-	//로그인 성공여부 판단
-	//세션변수값 가져오기
-	String s_id="", s_passwd="";
-	if(session.getAttribute("s_id")!=null)
-	{
-		s_id=(String)session.getAttribute("s_id");
-		s_passwd=(String)session.getAttribute("s_passwd");
-	}
-	else
-	{
-		s_id="guest";
-		s_passwd="guest";
-	}
-%>    
+<c:if test="${sessionScope.s_id2 != null }">
+	<c:set var="memid" value="${sessionScope.s_id2 }" scope="session"/>
+	<c:set var="s_mlevel" value="${sessionScope.s_mlevel }" scope="session"/>
+</c:if>
+<c:if test="${sessionScope.s_id2 == null }">
+	<c:set var="memid" value="guest" scope="session"/>
+	<c:set var="s_mlevel" value="guest" scope="session"/>
+</c:if>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -204,13 +200,14 @@ function getCookie(name) {
 			</td>
 			<td align="right">
 			<a href="/myweb/index.jsp"><img src="images/top_bt_home.gif"/></a>
-			<%if(s_id.equals("guest") || s_id.equals("")) { %>
-			<a href="/myweb/member/loginForm.jsp"><img src="images/top_bt_login.gif"/></a>
-			<a href="/myweb/member/agreement.jsp"><img src="images/top_bt_join.gif"/></a>
-			<%} else {%>
-			<a href="/myweb/member/logout.jsp"><img src="images/top_bt_logout.gif"/></a>
-			<a href="/myweb/member/loginForm.jsp"><img src="images/top_mypage.gif"/></a>
-			<%} %>
+			<c:if test="${memid == 'guest' || memid == null }">
+			<a href="mvc2member/loginForm.do"><img src="images/top_bt_login.gif"/></a>
+			<a href="mvc2member/agreement.do"><img src="images/top_bt_join.gif"/></a>
+			</c:if>
+			<c:if test="${memid != 'guest'} ">
+			<a href="mvc2member/logout.do"><img src="images/top_bt_logout.gif"/></a>
+			<a href="mvc2member/loginForm.do"><img src="images/top_mypage.gif"/></a>
+			</c:if>
 			</td>
 			</tr>
 			</table>
@@ -232,16 +229,13 @@ function getCookie(name) {
 			<img src="images/board.gif">
 			<table border="0" width="100%" bgcolor="#ffffff">
 			<tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="bbs/bbsList.jsp">게시판</a></td>
-            </tr>
-			<tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2bbs/list.do">게시판(MVC)</a></td>
-            </tr>
-			<tr>
                <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="notice/noticeList.jsp">공지사항</a></td>
             </tr>
+            <tr>
+               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="./bbs/bbsList.jsp">익명 게시판</a></td>
+            </tr>
 			<tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="pds/pdsList.jsp">첨부형 게시판</a></td>
+               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2bbs/list.do">익명 게시판(MVC)</a></td>
             </tr>
 			</table>
 			
@@ -249,11 +243,8 @@ function getCookie(name) {
 			
 			<img src="images/member.gif">
 			<table border="0" width="100%" bgcolor="#ffffff">
-			<tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="member/loginForm.jsp">회원</a></td>
-            </tr>
             <tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2member/loginForm.do">회원(MVC)</a></td>
+               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2member/loginForm.do">회원</a></td>
             </tr>
 			<tr>
                <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mail/mailForm.jsp">문의메일보내기</a></td>
@@ -392,70 +383,7 @@ function getCookie(name) {
 					</table>
 					</div>
 				</div>
-				<div style="width:620px; border:0px; " align="left">
-				    <div style="width:620px; float:left; margin-right:10px;">
-				        <table width="610" border="0" cellpadding="0" cellspacing="0" class="table">
-				            <tr>
-				                <td height="30"  style="vertical-align:middle;" align="left">
-				                   &nbsp; BOARD_ATTACH <br/> &nbsp; <font style="font-size:12px ">최근자료</font> 
-				                </td>
-				                <td align="right" style="font-size:12px; vertical-align:bottom;">
-				                   <a href="./pds/pdsList.jsp"> more</a> <img src="images/arrow.gif"/>&nbsp; &nbsp; 
-				                </td>
-				            </tr>
-				        </table>
-				    </div>				
-				</div>
-				
-				<div style="width:620px; border:0px; " align="left">
-			    <div style="width:620px; float:left; margin-right:10px; margin-top:5px; margin-bottom:10px;">
-		<%
-			ArrayList<PdsDTO> pdsList=pdsMgr.listMain();
-			String root=request.getContextPath();  //웹사이트명(myweb)
-			if(pdsList==null)
-			{
-				out.print("관련자료 없음");
-			}
-			else
-			{
-		%>
-			       <table width="610" border="0" cellspacing="0" >			          
-			              <tr>			       
-		<%
-				for(int idx=0; idx<pdsList.size(); idx++)
-				{
-					pdsDto=(PdsDTO)pdsList.get(idx);
-		%>		
-				<td class="tabletd" width="150">
-				<a href="./pds/pdsRead.jsp?nowPage=<%=nowPage%>&pdsno=<%=pdsDto.getPdsno()%>">			
-				<img src="<%=root%>/storage/<%=pdsDto.getFilename()%>" width="150" height="130"/>
-				</a>
-				<br/>
-				<a href="./pds/pdsRead.jsp?nowPage=<%=nowPage%>&pdsno=<%=pdsDto.getPdsno()%>"><%=pdsDto.getSubject() %></a>
-		<%
-					//오늘 게시글에 new이미지 추가
-					/* String today=Utility.getDate();  //2013-05-01;
-					String regdate=pdsDto.getRegdate().substring(0, 10);
-					 if(regdate.equals(today))
-					{
-						out.print("<img src='./images/new.gif'>");
-					}
-					 		
-					 //조회수 10이상 hot이미지 추가
-					 if(pdsDto.getReadcnt()>=10)
-					 {
-						out.print("<img src='./images/hot.gif'>");
-					 } */
-		%>
-				</td>
-		<%
-				}
-			}
-		%>	
-		</tr>
-		</table>
-		</div>
-		</div>	
+					
 		<!-- 본문 끝 -->
 			</div>
 	</div>

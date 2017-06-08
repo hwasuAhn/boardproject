@@ -27,19 +27,19 @@
 </head>
 <body>
 	<div align="center">
-	* 글 삭제 *<br/>
+	* Delete *<br/>
 	<form name="myform" method="post" action="bbs_delok.jsp">
 		<input type="hidden" name="bbsno" value="<%=request.getParameter("bbsno")%>">
 		<input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage")%>">
 		<table border="0" cellpadding="2" cellspacing="2" class="table">
 		<tr>
-			<th class="tableth" colspan="2">삭제 하시겠습니까?</th>
+			<th class="tableth" colspan="2">Delete?</th>
 			
 		</tr>
 		<tr>
 			<td class="tabletd" colspan="2">
-				<input type="button" value="확인" class="btn" onclick="blankchk(this.form)">
-				<input type="button" value="취소" class="btn" onclick="history.go(-1)">
+				<input type="button" value="OK" class="btn" onclick="blankchk(this.form)">
+				<input type="button" value="Cancel" class="btn" onclick="history.go(-1)">
 			</td>
 		</tr>
 		</table>

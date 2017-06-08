@@ -4,9 +4,10 @@
 <jsp:include page="../main.jsp"/>
 <c:remove var="memid" scope="session"/>
 <c:remove var="s_mlevel" scope="session"/>
+<%session.invalidate(); %>
+memid = ${memid }
 <meta http-equiv="Refresh" content="0;url=/myweb/mvc2member/loginForm.do">
 <div id="content" align="center">
-	<!--  -->
 	<!-- 본문 시작 -->
 	
 	<!-- 본문 끝 -->

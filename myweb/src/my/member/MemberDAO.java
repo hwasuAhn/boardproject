@@ -11,15 +11,13 @@ import javax.sql.DataSource;
 
 public class MemberDAO {
 
-	public MemberDAO() {}  //±âº»»ý¼ºÀÚ
+	public MemberDAO() {}
 	
 	private static MemberDAO instance=new MemberDAO();
 	
 	public static MemberDAO getInstance() {
 		return instance;
 	}
-		
-	//¾Æ·¡ ¿µ¿ª¿¡ ¸Þ¼Òµå ÀÛ¼º
 	
 	//login
 	public int login(String id, String passwd) throws Exception {
@@ -46,7 +44,7 @@ public class MemberDAO {
 				//dto=new MemberDTO();
 				//dto.setMlevel(rs.getString("mlevel"));
 				res=rs.getInt("cnt");			
-				//System.out.println("·Î±×ÀÎ res : "+res);
+
 			}
 			/*else
 			{
@@ -104,7 +102,7 @@ public class MemberDAO {
 		return dto;
 	}  //loginlevel end
 	
-	//È¸¿ø°¡ÀÔ
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int insertmem(MemberDTO mem) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -129,7 +127,6 @@ public class MemberDAO {
 			pstmt.setString(9, mem.getJob());
 			res=pstmt.executeUpdate();		
 			
-			//System.out.println("È¸¿ø°¡ÀÔ res : "+res);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -140,7 +137,6 @@ public class MemberDAO {
 		return res;
 	}  //insertmem end
 	
-	//¾ÆÀÌµð È®ÀÎ
 	public MemberDTO idSearch(String id) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -175,7 +171,6 @@ public class MemberDAO {
 		return mod;
 	}  //idSearch end
 	
-	//È¸¿øÁ¤º¸ ¼öÁ¤Æû
 	public MemberDTO modifyForm(MemberDTO dto) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -213,8 +208,7 @@ public class MemberDAO {
 		}  //try end
 		return dto;
 	}  //modifyForm end
-	
-	//È¸¿øÁ¤º¸ ¼öÁ¤
+
 	public int modifyMem(MemberDTO mod) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -250,7 +244,7 @@ public class MemberDAO {
 			{
 				res=-1;
 			}
-			//System.out.println("È¸¿øÁ¤º¸¼öÁ¤ res : "+res);
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -261,7 +255,6 @@ public class MemberDAO {
 		return res;
 	}  //modifyMem end
 	
-	//È¸¿ø »èÁ¦
 	/*public int withdraw(String id, String passwd) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -299,7 +292,7 @@ public class MemberDAO {
 				pstmt.setString(1, id);
 				pstmt.setString(2, passwd);
 				res=pstmt.executeUpdate();
-				System.out.println("È¸¿ø»èÁ¦ x : "+x);
+				System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ x : "+x);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -326,7 +319,7 @@ public class MemberDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, passwd);
 			res=pstmt.executeUpdate();
-			//System.out.println("È¸¿ø»èÁ¦ res : "+res);
+			//System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ res : "+res);
 			//System.out.println("ID : "+id);
 			//System.out.println("PASSWD : "+passwd);
 		} catch(Exception e) {
@@ -339,7 +332,6 @@ public class MemberDAO {
 		return res;
 	}  //withdraw end
 	
-	//ID Áßº¹È®ÀÎ
 	public int duplicateId(String id) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -370,10 +362,9 @@ public class MemberDAO {
 		return res;
 	}  //duplicateId end
 	
-	//DBÄ¿³Ø¼Ç Ç®
 	private Connection getConnection() throws Exception {
 		Context initCtx=new InitialContext();
-		DataSource ds=(DataSource)initCtx.lookup("java:comp/env/jdbc/oracle");
+		DataSource ds=(DataSource)initCtx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
 	}
 	

@@ -17,13 +17,13 @@ public class BbsDAO {
 		dbconn=new DBConnect();
 	}
 	
-	/** ÆäÀÌÁö´ç Ãâ·ÂÇÒ ·¹ÄÚµå ¼ö */
+	/** í˜ì´ì§€ë‹¹ ì¶œë ¥í•  ë ˆì½”ë“œ ìˆ˜ */
 	public int numPerPage=10;
-	/** ºí·°´ç Ãâ·Â ÆäÀÌÁö ¼ö */
+	/** ë¸”ëŸ­ë‹¹ ì¶œë ¥ í˜ì´ì§€ ìˆ˜ */
 	private int pagePerBlock=10;
 
-	//ºñÁö´Ï½º ·ÎÁ÷ ±¸Çö
-	//ÇàÃà
+	//ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ êµ¬í˜„
+	//í–‰ì¶•
 	public int insert(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -32,21 +32,21 @@ public class BbsDAO {
 		int res=0;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			
-			//1)±×·ì¹øÈ£ »ı¼º
-			//bbsnoÄ®·³ °ª Áß¿¡¼­ Á¦ÀÏ Å«°ª+1
-			sql+=" SELECT max(bbsno) From tb_bbs ";  //Äõ¸®¹® ÀÛ¼º
-			pstmt=con.prepareStatement(sql);  //Äõ¸®¹® »ı¼º
-			rs=pstmt.executeQuery();  //Äõ¸®¹® ½ÇÇà
+			//1)ê·¸ë£¹ë²ˆí˜¸ ìƒì„±
+			//bbsnoì¹¼ëŸ¼ ê°’ ì¤‘ì—ì„œ ì œì¼ í°ê°’+1
+			sql+=" SELECT max(bbsno) From tb_bbs ";  //ì¿¼ë¦¬ë¬¸ ì‘ì„±
+			pstmt=con.prepareStatement(sql);  //ì¿¼ë¦¬ë¬¸ ìƒì„±
+			rs=pstmt.executeQuery();  //ì¿¼ë¦¬ë¬¸ ì‹¤í–‰
 			int grpno=0;
 			if(rs.next())
 			{
 				grpno=rs.getInt(1)+1;
 			}
 			
-			//2)·¹ÄÚµå Ãß°¡
-			sql="";  //sqlº¯¼ö °ª ÃÊ±âÈ­
+			//2)ë ˆì½”ë“œ ì¶”ê°€
+			sql="";  //sqlë³€ìˆ˜ ê°’ ì´ˆê¸°í™”
 			sql+=" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno) ";
 			sql+=" VALUES(bbsno_seq.nextval, ?, ?, ?, ?, ?, ?) ";
 			pstmt=con.prepareStatement(sql);			
@@ -74,13 +74,13 @@ public class BbsDAO {
 		BbsDTO dto=null;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			
-			//1Â÷ : ±×·ì¹øÈ£´Â ³»¸²Â÷¼ø 2Â÷ : ±Û¼ø¼­´Â ¿À¸§Â÷¼ø Á¤·Ä
-			sql+=" SELECT * From tb_bbs ";  //Äõ¸®¹® ÀÛ¼º
+			//1ì°¨ : ê·¸ë£¹ë²ˆí˜¸ëŠ” ë‚´ë¦¼ì°¨ìˆœ 2ì°¨ : ê¸€ìˆœì„œëŠ” ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
+			sql+=" SELECT * From tb_bbs ";  //ì¿¼ë¦¬ë¬¸ ì‘ì„±
 			sql+=" ORDER BY grpno DESC, ansnum ASC ";
-			pstmt=con.prepareStatement(sql);  //Äõ¸®¹® »ı¼º
-			rs=pstmt.executeQuery();  //Äõ¸®¹® ½ÇÇà
+			pstmt=con.prepareStatement(sql);  //ì¿¼ë¦¬ë¬¸ ìƒì„±
+			rs=pstmt.executeQuery();  //ì¿¼ë¦¬ë¬¸ ì‹¤í–‰
 			if(rs.next())
 			{
 				list=new ArrayList<BbsDTO>();
@@ -108,7 +108,7 @@ public class BbsDAO {
 		return list;
 	}  //list() end
 	
-	//¸ŞÀÎ ¸®½ºÆ®
+	//ë©”ì¸ ë¦¬ìŠ¤íŠ¸
 	public ArrayList<BbsDTO> listMain() {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -118,15 +118,15 @@ public class BbsDAO {
 		BbsDTO dto=null;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			
-			//1Â÷ : ±×·ì¹øÈ£´Â ³»¸²Â÷¼ø 2Â÷ : ±Û¼ø¼­´Â ¿À¸§Â÷¼ø Á¤·Ä
+			//1ì°¨ : ê·¸ë£¹ë²ˆí˜¸ëŠ” ë‚´ë¦¼ì°¨ìˆœ 2ì°¨ : ê¸€ìˆœì„œëŠ” ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 			sql+=" SELECT bbsno, wname, subject, readcnt, regdt, grpno, indent, ansnum, r FROM( ";
 			sql+=" SELECT bbsno, wname, subject, readcnt, regdt, grpno, indent, ansnum, rownum as r FROM( ";
-			sql+=" SELECT bbsno, wname, subject, readcnt, regdt, grpno, indent, ansnum From tb_bbs ";  //Äõ¸®¹® ÀÛ¼º
+			sql+=" SELECT bbsno, wname, subject, readcnt, regdt, grpno, indent, ansnum From tb_bbs ";  //ì¿¼ë¦¬ë¬¸ ì‘ì„±
 			sql+=" ORDER BY grpno DESC, ansnum ASC)) WHERE r<6 ";
-			pstmt=con.prepareStatement(sql);  //Äõ¸®¹® »ı¼º
-			rs=pstmt.executeQuery();  //Äõ¸®¹® ½ÇÇà
+			pstmt=con.prepareStatement(sql);  //ì¿¼ë¦¬ë¬¸ ìƒì„±
+			rs=pstmt.executeQuery();  //ì¿¼ë¦¬ë¬¸ ì‹¤í–‰
 			if(rs.next())
 			{
 				list=new ArrayList<BbsDTO>();
@@ -154,7 +154,7 @@ public class BbsDAO {
 		return list;
 	}  //listMain() end
 	
-	//»ó¼¼º¸±â
+	//ìƒì„¸ë³´ê¸°
 	public BbsDTO read(int bbsno) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -164,12 +164,12 @@ public class BbsDAO {
 		
 		try {
 			increment(bbsno);
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			sql+=" SELECT * FROM tb_bbs ";
 			sql+=" WHERE bbsno=? ";
-			pstmt=con.prepareStatement(sql);  //Äõ¸®¹® »ı¼º
+			pstmt=con.prepareStatement(sql);  //ì¿¼ë¦¬ë¬¸ ìƒì„±
 			pstmt.setInt(1, bbsno);
-			rs=pstmt.executeQuery();  //Äõ¸®¹® ½ÇÇà			
+			rs=pstmt.executeQuery();  //ì¿¼ë¦¬ë¬¸ ì‹¤í–‰			
 			if(rs.next())
 			{	
 				dto=new BbsDTO();
@@ -187,7 +187,7 @@ public class BbsDAO {
 			}
 			else
 			{
-				System.out.println("°ü·Ã °Ô½Ã±Û ¾øÀ½");
+				System.out.println("ê´€ë ¨ ê²Œì‹œê¸€ ì—†ìŒ");
 			}
 		} catch(Exception e) {
 			System.out.println(e);
@@ -197,7 +197,7 @@ public class BbsDAO {
 		return dto;		
 	}  //read end
 	
-	//Á¶È¸¼ö Áõ°¡
+	//ì¡°íšŒìˆ˜ ì¦ê°€
 	public void increment(int bbsno) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -205,7 +205,7 @@ public class BbsDAO {
 		int res=0;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			sql+=" UPDATE tb_bbs ";
 			sql+=" SET readcnt=readcnt+1 ";
 			sql+=" WHERE bbsno=? ";
@@ -214,7 +214,7 @@ public class BbsDAO {
 			res=pstmt.executeUpdate();
 			if(res==0)
 			{
-				System.out.println("Á¶È¸¼ö Áõ°¡ ½ÇÆĞ");
+				System.out.println("ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨");
 			}
 		} catch(Exception e) {
 			System.out.println(e);
@@ -231,12 +231,12 @@ public class BbsDAO {
 		int res=0;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			
-			//1)ºÎ¸ğ±Û Á¤º¸°¡Á®¿À±â
-			//	±×·ì¹øÈ£ : ºÎ¸ğ ±×·ì¹øÈ£¿Í µ¿ÀÏÇÏ°Ô
-			//	µé¿©¾²±â : ºÎ¸ğ±Û µé¿©¾²±â + 1
-			//	±Û¼ø¼­ : ºÎ¸ğ±Û¼ø¼­ + 1
+			//1)ë¶€ëª¨ê¸€ ì •ë³´ê°€ì ¸ì˜¤ê¸°
+			//	ê·¸ë£¹ë²ˆí˜¸ : ë¶€ëª¨ ê·¸ë£¹ë²ˆí˜¸ì™€ ë™ì¼í•˜ê²Œ
+			//	ë“¤ì—¬ì“°ê¸° : ë¶€ëª¨ê¸€ ë“¤ì—¬ì“°ê¸° + 1
+			//	ê¸€ìˆœì„œ : ë¶€ëª¨ê¸€ìˆœì„œ + 1
 			sql.append(" SELECT grpno, indent, ansnum FROM tb_bbs ");
 			sql.append(" WHERE bbsno=? ");
 			pstmt=con.prepareStatement(sql.toString());
@@ -245,13 +245,13 @@ public class BbsDAO {
 			int grpno=0, indent=0, ansnum=0;
 			if(rs.next())
 			{
-				grpno=rs.getInt("grpno");  //±×·ì¹øÈ£
-				indent=rs.getInt("indent")+1;  //µé¿©¾²±â
-				ansnum=rs.getInt("ansnum")+1;  //±Û¼ø¼­
-			}  //ÀÔ·ÂÀÚ·á ¿Ï¼º
+				grpno=rs.getInt("grpno");  //ê·¸ë£¹ë²ˆí˜¸
+				indent=rs.getInt("indent")+1;  //ë“¤ì—¬ì“°ê¸°
+				ansnum=rs.getInt("ansnum")+1;  //ê¸€ìˆœì„œ
+			}  //ì…ë ¥ìë£Œ ì™„ì„±
 			
-			//2)°°Àº ±×·ì³»¿¡¼­ ±Û¼ø¼­ ¼öÁ¤ÇÏ±â
-			sql.delete(0, sql.length());  //1´Ü°è¿¡¼­ »ç¿ëÇß´ø Äõ¸®¹® »èÁ¦
+			//2)ê°™ì€ ê·¸ë£¹ë‚´ì—ì„œ ê¸€ìˆœì„œ ìˆ˜ì •í•˜ê¸°
+			sql.delete(0, sql.length());  //1ë‹¨ê³„ì—ì„œ ì‚¬ìš©í–ˆë˜ ì¿¼ë¦¬ë¬¸ ì‚­ì œ
 			sql.append(" UPDATE tb_bbs ");
 			sql.append(" SET ansnum=ansnum+1 ");
 			sql.append(" WHERE grpno=? AND ansnum>=? ");
@@ -260,8 +260,8 @@ public class BbsDAO {
 			pstmt.setInt(2, ansnum);
 			pstmt.executeUpdate();
 			
-			//3)´äº¯±Û Ãß°¡
-			sql.delete(0, sql.length());  //2´Ü°è¿¡¼­ »ç¿ëÇß´ø Äõ¸®¹® »èÁ¦
+			//3)ë‹µë³€ê¸€ ì¶”ê°€
+			sql.delete(0, sql.length());  //2ë‹¨ê³„ì—ì„œ ì‚¬ìš©í–ˆë˜ ì¿¼ë¦¬ë¬¸ ì‚­ì œ
 			sql.append(" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno, indent, ansnum) ");
 			sql.append(" VALUES(bbsno_seq.nextval, ?, ?, ?, ?, ?, ?, ? ,?) ");
 			pstmt=con.prepareStatement(sql.toString());			
@@ -282,7 +282,7 @@ public class BbsDAO {
 		return res;
 	}  //reply() end
 	
-	//»èÁ¦
+	//ì‚­ì œ
 	public int delete(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -290,7 +290,7 @@ public class BbsDAO {
 		int res=0;
 		
 		try {			
-			con=dbconn.getConnection();  //DB¿¬°á			
+			con=dbconn.getConnection();  //DBì—°ê²°			
 			sql+=" DELETE FROM tb_bbs ";
 			sql+=" WHERE bbsno=? AND passwd=? ";
 			pstmt=con.prepareStatement(sql);
@@ -305,7 +305,7 @@ public class BbsDAO {
 		return res;
 	}  //delete() end
 	
-	//°ü¸®ÀÚ »èÁ¦
+	//ê´€ë¦¬ì ì‚­ì œ
 	public int admindelete(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -313,7 +313,7 @@ public class BbsDAO {
 		int res=0;
 		
 		try {			
-			con=dbconn.getConnection();  //DB¿¬°á			
+			con=dbconn.getConnection();  //DBì—°ê²°			
 			sql+=" DELETE FROM tb_bbs ";
 			sql+=" WHERE bbsno=? ";
 			pstmt=con.prepareStatement(sql);
@@ -327,7 +327,7 @@ public class BbsDAO {
 		return res;
 	}  //admindelete() end
 	
-	//¼öÁ¤Æû 
+	//ìˆ˜ì •í¼ 
 	public BbsDTO updateform(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -335,7 +335,7 @@ public class BbsDAO {
 		String sql="";
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			sql+=" SELECT wname, subject, content, passwd FROM tb_bbs";
 			sql+=" WHERE bbsno=? AND passwd=? ";
 			pstmt=con.prepareStatement(sql);
@@ -361,7 +361,7 @@ public class BbsDAO {
 		return dto;
 	}  //updateform() end
 	
-	//°ü¸®ÀÚ ¼öÁ¤Æû 
+	//ê´€ë¦¬ì ìˆ˜ì •í¼ 
 	public BbsDTO adminupdateform(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -369,7 +369,7 @@ public class BbsDAO {
 		String sql="";
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			sql+=" SELECT wname, subject, content, passwd FROM tb_bbs";
 			sql+=" WHERE bbsno=? ";
 			pstmt=con.prepareStatement(sql);
@@ -394,7 +394,7 @@ public class BbsDAO {
 		return dto;
 	}  //adminupdateform() end
 	
-	//¼öÁ¤
+	//ìˆ˜ì •
 	public boolean update(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -403,7 +403,7 @@ public class BbsDAO {
 		boolean flag=false;
 		
 		try {
-			con=dbconn.getConnection();  //DB¿¬°á
+			con=dbconn.getConnection();  //DBì—°ê²°
 			sql+=" UPDATE tb_bbs ";
 			sql+=" SET wname=?, subject=?, content=?, passwd=?, ip=? ";
 			sql+=" WHERE bbsno=? ";
@@ -427,7 +427,7 @@ public class BbsDAO {
 		return flag;
 	}  //update() end
 	
-	//ÇöÀç ÆäÀÌÁö ¸ñ·Ï
+	//í˜„ì¬ í˜ì´ì§€ ëª©ë¡
 	public ArrayList<BbsDTO> list(int nowPage) {
 		Connection con=null;
     	PreparedStatement pstmt=null;
@@ -436,14 +436,14 @@ public class BbsDAO {
     	ArrayList<BbsDTO> list=new ArrayList<BbsDTO>();
     	BbsDTO dto=new BbsDTO();
     	
-		/* ÁÖ¾îÁø ÆäÀÌÁöÀÇ ½ÃÀÛ ·¹ÄÚµå ¹øÈ£
-		Á¶°Ç: ÆäÀÌÁö ½ÃÀÛ ¹øÈ£´Â 0ºÎÅÍ ½ÃÀÛ
-		·¹ÄÚµå ¹øÈ£µµ 0ºÎÅÍ ½ÃÀÛ
+		/* ì£¼ì–´ì§„ í˜ì´ì§€ì˜ ì‹œì‘ ë ˆì½”ë“œ ë²ˆí˜¸
+		ì¡°ê±´: í˜ì´ì§€ ì‹œì‘ ë²ˆí˜¸ëŠ” 0ë¶€í„° ì‹œì‘
+		ë ˆì½”ë“œ ë²ˆí˜¸ë„ 0ë¶€í„° ì‹œì‘
 		   
-		 1ÆäÀÌÁö: 0 * 10 = 0ºÎÅÍ ½ÃÀÛ
-		 2ÆäÀÌÁö: 1 * 10 = 10ºÎÅÍ ½ÃÀÛ 
-		 3ÆäÀÌÁö: 2 * 10 = 20ºÎÅÍ ½ÃÀÛ
-		 4ÆäÀÌÁö: 3 * 10 = 30ºÎÅÍ ½ÃÀÛ
+		 1í˜ì´ì§€: 0 * 10 = 0ë¶€í„° ì‹œì‘
+		 2í˜ì´ì§€: 1 * 10 = 10ë¶€í„° ì‹œì‘ 
+		 3í˜ì´ì§€: 2 * 10 = 20ë¶€í„° ì‹œì‘
+		 4í˜ì´ì§€: 3 * 10 = 30ë¶€í„° ì‹œì‘
 		*/
     	int beginOfPage=beginOfPage(nowPage);
     	
@@ -451,10 +451,10 @@ public class BbsDAO {
     		con=dbconn.getConnection();  
     		
             // ---------------------------------------------------
-            // ·¹ÄÚµå¸¦ ÃßÃâÇÒ ¹üÀ§ »ı¼º
+            // ë ˆì½”ë“œë¥¼ ì¶”ì¶œí•  ë²”ìœ„ ìƒì„±
             // ---------------------------------------------------
-            // 1 ÆäÀÌÁö:  1 ~ 12   WHERE r >= 1 and r <= 12
-            // 2 ÆäÀÌÁö: 13 ~ 24  WHERE r >= 13 and r <= 24
+            // 1 í˜ì´ì§€:  1 ~ 12   WHERE r >= 1 and r <= 12
+            // 2 í˜ì´ì§€: 13 ~ 24  WHERE r >= 13 and r <= 24
             int startnum=beginOfPage;  // 1
             int endnum=(beginOfPage + this.numPerPage) - 1;
             String range="r >= " + startnum + " and r <= " + endnum;
@@ -492,7 +492,7 @@ public class BbsDAO {
     	return list; 
 	}  //list(nowPage) end
 	
-	//Á¦¸ñ °Ë»ö ÆäÀÌÁö ¸ñ·Ï
+	//ì œëª© ê²€ìƒ‰ í˜ì´ì§€ ëª©ë¡
 		public ArrayList<BbsDTO> listSerch(int nowPage, String serchTxt, String key) {
 			Connection con=null;
 	    	PreparedStatement pstmt=null;
@@ -515,14 +515,14 @@ public class BbsDAO {
 			}
 	    	//System.out.println(serchTxt);
 	    	
-			/* ÁÖ¾îÁø ÆäÀÌÁöÀÇ ½ÃÀÛ ·¹ÄÚµå ¹øÈ£
-			Á¶°Ç: ÆäÀÌÁö ½ÃÀÛ ¹øÈ£´Â 0ºÎÅÍ ½ÃÀÛ
-			·¹ÄÚµå ¹øÈ£µµ 0ºÎÅÍ ½ÃÀÛ
+			/* ì£¼ì–´ì§„ í˜ì´ì§€ì˜ ì‹œì‘ ë ˆì½”ë“œ ë²ˆí˜¸
+			ì¡°ê±´: í˜ì´ì§€ ì‹œì‘ ë²ˆí˜¸ëŠ” 0ë¶€í„° ì‹œì‘
+			ë ˆì½”ë“œ ë²ˆí˜¸ë„ 0ë¶€í„° ì‹œì‘
 			   
-			 1ÆäÀÌÁö: 0 * 10 = 0ºÎÅÍ ½ÃÀÛ
-			 2ÆäÀÌÁö: 1 * 10 = 10ºÎÅÍ ½ÃÀÛ 
-			 3ÆäÀÌÁö: 2 * 10 = 20ºÎÅÍ ½ÃÀÛ
-			 4ÆäÀÌÁö: 3 * 10 = 30ºÎÅÍ ½ÃÀÛ
+			 1í˜ì´ì§€: 0 * 10 = 0ë¶€í„° ì‹œì‘
+			 2í˜ì´ì§€: 1 * 10 = 10ë¶€í„° ì‹œì‘ 
+			 3í˜ì´ì§€: 2 * 10 = 20ë¶€í„° ì‹œì‘
+			 4í˜ì´ì§€: 3 * 10 = 30ë¶€í„° ì‹œì‘
 			*/
 	    	int beginOfPage=beginOfPage(nowPage);
 	    	
@@ -530,10 +530,10 @@ public class BbsDAO {
 	    		con=dbconn.getConnection();  
 	    		
 	            // ---------------------------------------------------
-	            // ·¹ÄÚµå¸¦ ÃßÃâÇÒ ¹üÀ§ »ı¼º
+	            // ë ˆì½”ë“œë¥¼ ì¶”ì¶œí•  ë²”ìœ„ ìƒì„±
 	            // ---------------------------------------------------
-	            // 1 ÆäÀÌÁö:  1 ~ 12   WHERE r >= 1 and r <= 12
-	            // 2 ÆäÀÌÁö: 13 ~ 24  WHERE r >= 13 and r <= 24
+	            // 1 í˜ì´ì§€:  1 ~ 12   WHERE r >= 1 and r <= 12
+	            // 2 í˜ì´ì§€: 13 ~ 24  WHERE r >= 13 and r <= 24
 	            int startnum=beginOfPage;  // 1
 	            int endnum=(beginOfPage + this.numPerPage) - 1;
 	            String range="r >= " + startnum + " and r <= " + endnum;
@@ -572,7 +572,7 @@ public class BbsDAO {
 	    	return list; 
 		}  //listSerch(nowPage) end
 		
-		//Á¦¸ñ °Ë»ö ÆäÀÌÁö ¸ñ·Ï nowPage X
+		//ì œëª© ê²€ìƒ‰ í˜ì´ì§€ ëª©ë¡ nowPage X
 		public ArrayList<BbsDTO> listSerch(String serchTxt, String key) {
 			Connection con=null;
 	    	PreparedStatement pstmt=null;
@@ -625,14 +625,14 @@ public class BbsDAO {
 		}  //listSerch() end
 	
     /**
-     * ÆäÀÌÁöÀÇ ½ÃÀÛ·¹ÄÚµå¹øÈ£
-     * nowPage: ÇöÀç ÆäÀÌÁö 
-     * ÆäÀÌÁö´ç Ãâ·ÂÇÒ ·¹ÄÚµå ¼ö ¡Ú
-     * ÇöÀç ÆäÀÌÁö ¹øÈ£ * ÆäÀÌÁö´ç ·¹ÄÚµå ¼ö
+     * í˜ì´ì§€ì˜ ì‹œì‘ë ˆì½”ë“œë²ˆí˜¸
+     * nowPage: í˜„ì¬ í˜ì´ì§€ 
+     * í˜ì´ì§€ë‹¹ ì¶œë ¥í•  ë ˆì½”ë“œ ìˆ˜ â˜…
+     * í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ * í˜ì´ì§€ë‹¹ ë ˆì½”ë“œ ìˆ˜
      * 1 Page = (0 * 12) + 1 --> 1
      * 2 Page = (1 * 12) + 1 --> 13
      * 3 Page = (2 * 12) + 1 --> 25
-     * @param nowPage ÇöÀç ÆäÀÌÁö
+     * @param nowPage í˜„ì¬ í˜ì´ì§€
      * @return
      */
     public int beginOfPage(int nowPage){
@@ -640,43 +640,43 @@ public class BbsDAO {
     }  //beginOfPage(nowPage) end	
     
     // ----------------------------------------------------------
-    // ÆäÀÌÂ¡ °ü·Ã ¸Ş¼Òµå ½ÃÀÛ
+    // í˜ì´ì§• ê´€ë ¨ ë©”ì†Œë“œ ì‹œì‘
     // ----------------------------------------------------------
     public String paging(int nowPage,String fileName) {
 
-        int pagePerBlock=this.pagePerBlock; //ºí·°´ç ÆäÀÌÁö ¼ö ±âº»°ªÀº 10ÆäÀÌÁö
+        int pagePerBlock=this.pagePerBlock; //ë¸”ëŸ­ë‹¹ í˜ì´ì§€ ìˆ˜ ê¸°ë³¸ê°’ì€ 10í˜ì´ì§€
         
-        // °Ë»ö ·¹ÄÚµå¼ö »êÃâ
+        // ê²€ìƒ‰ ë ˆì½”ë“œìˆ˜ ì‚°ì¶œ
         int searchCount=recordCount();
-        // ÀüÃ¼ ÆäÀÌÁö »êÃâ
+        // ì „ì²´ í˜ì´ì§€ ì‚°ì¶œ
         int totalPage=pageCount(searchCount);
-        // ÀüÃ¼ ºí·° »êÃâ
+        // ì „ì²´ ë¸”ëŸ­ ì‚°ì¶œ
         int totalBlock=blockCount(totalPage);
-        // ÇöÀç ºí·° »êÃâ
+        // í˜„ì¬ ë¸”ëŸ­ ì‚°ì¶œ
         int nowBlock=nowBlock(nowPage);
         
         StringBuffer sb=new StringBuffer();
         
-        // ÆäÀÌÂ¡ ½ÃÀÛ
-        if(searchCount > 0) { // ·¹ÄÚµå°¡ Á¸ÀçÇÑ´Ù¸é
+        // í˜ì´ì§• ì‹œì‘
+        if(searchCount > 0) { // ë ˆì½”ë“œê°€ ì¡´ì¬í•œë‹¤ë©´
             sb.append("[<a href=./" + fileName);
             sb.append("?nowPage=0"); 
-            sb.append(">Ã³À½ ÆäÀÌÁö</a>]&nbsp;");            
+            sb.append(">ì²˜ìŒ í˜ì´ì§€</a>]&nbsp;");            
             
-            // ÇöÀç ³ª¿­µÈ ÆäÀÌÁö°¡ 11ÆäÀÌÁö ÀÌ»óÀÏ °æ¿ì
-            // ÀÌÀü 10ÆäÀÌÁö Ãâ·Â
+            // í˜„ì¬ ë‚˜ì—´ëœ í˜ì´ì§€ê°€ 11í˜ì´ì§€ ì´ìƒì¼ ê²½ìš°
+            // ì´ì „ 10í˜ì´ì§€ ì¶œë ¥
             // 0 Block:  1~10 page 
             // 1 Block: 11~20 page 
-            if(nowBlock > 0) { // 1 ÀÌ»óÀÓÀ¸·Î ÀÌÀüºí·° ÀÌµ¿ °¡´É
-                // ÀÌÀü 10°³ ¸µÅ©, ÀÌÀü ºí·°À¸·Î ÀÌµ¿
+            if(nowBlock > 0) { // 1 ì´ìƒì„ìœ¼ë¡œ ì´ì „ë¸”ëŸ­ ì´ë™ ê°€ëŠ¥
+                // ì´ì „ 10ê°œ ë§í¬, ì´ì „ ë¸”ëŸ­ìœ¼ë¡œ ì´ë™
                 // 1 Block --> ((1 - 1) * 10) =  0 Block page 0 
                 // 2 Block --> ((2 - 1) * 10) =  1 Block page 10
                 sb.append("[<a href=./" + fileName);
                 sb.append("?nowPage=" + ((nowBlock-1)*pagePerBlock)); // ((2-1)*10)=10
-                sb.append(">ÀÌÀü"+ pagePerBlock+"°³</a>] ::: ");
+                sb.append(">ì´ì „"+ pagePerBlock+"ê°œ</a>] ::: ");
             }
             
-            // ÆäÀÌÁö ¸ñ·Ï Ãâ·Â
+            // í˜ì´ì§€ ëª©ë¡ ì¶œë ¥
             for (int i = 0; i < pagePerBlock; i++) {
                 sb.append("<a href=./" + fileName);
              // 1 page: ((0 * 10) + 0) = 0
@@ -686,38 +686,38 @@ public class BbsDAO {
                 sb.append("?nowPage=" + ((nowBlock*pagePerBlock) + i));
                 sb.append(">");
                 
-             // ÇöÀç ÆäÀÌÁö´Â Â÷º°È­ÇØ¼­ Ãâ·Â  
+             // í˜„ì¬ í˜ì´ì§€ëŠ” ì°¨ë³„í™”í•´ì„œ ì¶œë ¥  
                 if(((nowBlock * pagePerBlock) + i)==nowPage) {
                     sb.append("<b><u>"+((nowBlock * pagePerBlock) + i + 1)+"</u></b></a>&nbsp;");
                 }else{
                     sb.append(((nowBlock * pagePerBlock) + i + 1)+"</a>&nbsp;");
                 }
                 
-                // ¸¶Áö¸· ÆäÀÌÁöÀÌ¸é ÆäÀÌÁö ¹øÈ£ Ãâ·ÂÀ» Á¾·á
-                // ÆäÀÌÁö´Â 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î +1À»ÇÏ¿© ¸¶Áö¸· ÆäÀÌÁöÀÎÁö
-                // °Ë»ç
+                // ë§ˆì§€ë§‰ í˜ì´ì§€ì´ë©´ í˜ì´ì§€ ë²ˆí˜¸ ì¶œë ¥ì„ ì¢…ë£Œ
+                // í˜ì´ì§€ëŠ” 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ +1ì„í•˜ì—¬ ë§ˆì§€ë§‰ í˜ì´ì§€ì¸ì§€
+                // ê²€ì‚¬
                 if ((nowBlock * pagePerBlock) + i + 1 == totalPage) break;
             }
             
-            // ´ÙÀ½ 10°³ Ãâ·Â
-            // nowBlockÀº 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î +1À»ÇÏ¿© ºí·° ÀÌµ¿¿©ºÎ °áÁ¤
+            // ë‹¤ìŒ 10ê°œ ì¶œë ¥
+            // nowBlockì€ 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ +1ì„í•˜ì—¬ ë¸”ëŸ­ ì´ë™ì—¬ë¶€ ê²°ì •
             if ( nowBlock + 1 < totalBlock) {
-                // ´ÙÀ½ ºí·°À¸·Î ÀÌµ¿ ¸µÅ©
+                // ë‹¤ìŒ ë¸”ëŸ­ìœ¼ë¡œ ì´ë™ ë§í¬
                 sb.append(" ::: [<a href=./" + fileName);
                 sb.append("?nowPage="+((nowBlock + 1) * pagePerBlock)); // (1+1)*10
-                sb.append(">´ÙÀ½ "+pagePerBlock+"°³</a>]");
+                sb.append(">ë‹¤ìŒ "+pagePerBlock+"ê°œ</a>]");
             }
             
             sb.append("[<a href=./" + fileName);
             
-            // ÆäÀÌÁö 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î -1À» ÇÔ.
+            // í˜ì´ì§€ 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ -1ì„ í•¨.
             sb.append("?nowPage=" + (totalPage - 1)); 
-            sb.append(">¸¶Áö¸· ÆäÀÌÁö</a>]&nbsp;");            
+            sb.append(">ë§ˆì§€ë§‰ í˜ì´ì§€</a>]&nbsp;");            
         }        
         return sb.toString();
     }  //paging() end
     
-    //·¹ÄÚµå °¹¼ö
+    //ë ˆì½”ë“œ ê°¯ìˆ˜
     public int recordCount()
     {
     	Connection con=null;
@@ -741,30 +741,30 @@ public class BbsDAO {
     }  //recordCount() end
     
     /**
-     * ÀüÃ¼ ÆäÀÌÁö¼ö »êÃâ, ÇÏ³ªÀÇ ÆäÀÌÁö´Â ·¹ÄÚµå°¡ 1°³ ÀÖ¾îµµ ÇÏ³ªÀÇ 
-     * ÆäÀÌÁö·Î Ã³¸®µÇ¾î¾ß ÇÑ´Ù. µû¶ó¼­ 0.1À» 1·Î ÀÚ¸®¿Ã¸²ÇÑ´Ù.<br>
-     * ·¹ÄÚµå 1°³: 0.1 --> 1·Î ¿Ã¸²<br>
-     * ·¹ÄÚµå 11°³: 1.1 --> 2·Î ¿Ã¸²<br>
-     * ·¹ÄÚµå 25°³: 2.5 --> 3·Î ¿Ã¸²<br>
-     * @param count °Ë»öµÈ ·¹ÄÚµå ¼ö
+     * ì „ì²´ í˜ì´ì§€ìˆ˜ ì‚°ì¶œ, í•˜ë‚˜ì˜ í˜ì´ì§€ëŠ” ë ˆì½”ë“œê°€ 1ê°œ ìˆì–´ë„ í•˜ë‚˜ì˜ 
+     * í˜ì´ì§€ë¡œ ì²˜ë¦¬ë˜ì–´ì•¼ í•œë‹¤. ë”°ë¼ì„œ 0.1ì„ 1ë¡œ ìë¦¬ì˜¬ë¦¼í•œë‹¤.<br>
+     * ë ˆì½”ë“œ 1ê°œ: 0.1 --> 1ë¡œ ì˜¬ë¦¼<br>
+     * ë ˆì½”ë“œ 11ê°œ: 1.1 --> 2ë¡œ ì˜¬ë¦¼<br>
+     * ë ˆì½”ë“œ 25ê°œ: 2.5 --> 3ë¡œ ì˜¬ë¦¼<br>
+     * @param count ê²€ìƒ‰ëœ ë ˆì½”ë“œ ìˆ˜
      * @return
      */
     public int pageCount(int count){
-        double _count=(double)count; // Á¤¼öÇüÀ» double·Î º¯È¯
+        double _count=(double)count; // ì •ìˆ˜í˜•ì„ doubleë¡œ ë³€í™˜
         // System.out.println(_count);    // 1.0, 11.0
         
-        //  1.0 / 10 --> 0.1 --> 1.0, numPerPage: ÆäÀÌÁö´ç ·¹ÄÚµå ¼ö, 10 
+        //  1.0 / 10 --> 0.1 --> 1.0, numPerPage: í˜ì´ì§€ë‹¹ ë ˆì½”ë“œ ìˆ˜, 10 
         // 11.0 / 10 --> 1.1 --> 2.0 
         double retVal = Math.ceil( _count / this.numPerPage); 
         // System.out.println(retVal);    // 1.0, 2.0
         
-        return (int)retVal;  // ¼Ò¼öÁ¡ Â©¶ó¹ö¸², 1, 2        
+        return (int)retVal;  // ì†Œìˆ˜ì  ì§¤ë¼ë²„ë¦¼, 1, 2        
     
     }  //pageCount() end
     
     /**
-     * ÀüÃ¼ ºí·° ¼ö 
-     * @param count ÆäÀÌÁö ¼ö
+     * ì „ì²´ ë¸”ëŸ­ ìˆ˜ 
+     * @param count í˜ì´ì§€ ìˆ˜
      * @return
      */
     public int blockCount(int count){
@@ -776,13 +776,13 @@ public class BbsDAO {
     }  //blockCount() end
     
     /**
-     * ÇöÀç ºí·°¼ö¸¦ ¸®ÅÏÇÕ´Ï´Ù.
-     * @param nowPage ÇöÀç ÆäÀÌÁö ¹øÈ£
-     * @return ÇöÀç ºí·° ¹øÈ£
+     * í˜„ì¬ ë¸”ëŸ­ìˆ˜ë¥¼ ë¦¬í„´í•©ë‹ˆë‹¤.
+     * @param nowPage í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
+     * @return í˜„ì¬ ë¸”ëŸ­ ë²ˆí˜¸
      */
     public int nowBlock(int nowPage){
         int retVal = nowPage / this.pagePerBlock;
-        // ÇöÀç ºí·° = ÇöÀç ÆäÀÌÁö/ ºí·°´ç ÆäÀÌÁö ¼ö
+        // í˜„ì¬ ë¸”ëŸ­ = í˜„ì¬ í˜ì´ì§€/ ë¸”ëŸ­ë‹¹ í˜ì´ì§€ ìˆ˜
         //  1 -->  1 / 10 --> 0 Block
         // 11 --> 11 / 10 --> 1 Block
         // 15 --> 15 / 10 --> 1 Block

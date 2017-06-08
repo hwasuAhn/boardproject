@@ -9,7 +9,7 @@
 <body>
 <center>
   <FORM METHOD=POST ACTION="adminProc.jsp">
-	<TABLE border=1>
+	<TABLE border=1 cellspacing="0" cellpadding="0">
 	<TR>
 		<TD colspan=2 align=center>* 관리자페이지 로그인 *</TD>
 	</TR>

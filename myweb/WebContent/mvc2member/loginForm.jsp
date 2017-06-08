@@ -5,7 +5,7 @@
 <jsp:include page="../main.jsp"/>
 	
 <div id="content" align="center">
-	<!--  -->
+
 	<!-- 본문 시작 -->
 	<script type="text/javascript">
 		function memberReg() {
@@ -51,7 +51,7 @@
 		     f.submit(); //JavaScript가 서버로 데이터 전송 
 		}
 	</script>
-	<c:if test="${empty sessionScope.memid }">
+	<c:if test="${empty sessionScope.s_id2 }">
 	<img src="../images/j_login_mvc.gif"><br/><br/><br/>
 	<form name="login"  method="post"  action="/myweb/mvc2member/loginPro.do">    
      <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" height="80">
@@ -83,7 +83,7 @@
 	</form>
 	</c:if>
 	
-	<c:if test="${sessionScope.memid!=null }">
+	<c:if test="${memid != 'guest'}">
 	<img src="../images/j_mypage_mvc.gif"/><br/><br/><br/>
 	<table width="100" cellpadding="0" align="center" border="0">
 	<tr>
