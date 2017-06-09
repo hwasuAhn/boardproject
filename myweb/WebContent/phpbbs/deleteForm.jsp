@@ -7,26 +7,14 @@
 	<!-- 본문 시작 -->
 	<img src="../images/j_board_notice_mvc.gif"/><br/><br/>
 	* 글 삭제 *<br/>
-<script language="javaScript">
-function deleteSave()
-{
-	if(document.delForm.passwd.value=='')
-	{
-		alert("비밀번호를 입력하십시요");
-		document.delForm.passwd.focus();
-		return false;
-	}
-}
-</script>
-<form method="post" name="delForm" action="/myweb/mvc2bbs/deletePro.do?pageNum=${pageNum}" onsubmit="return deleteSave()">
+<form method="post" name="delForm" action="/myweb/mvc2bbs/phpdeletePro.do?pageNum=${pageNum}" onsubmit="return deleteSave()">
 	<input type="hidden" name="num" value="${num}">
 	<table border="0" cellpadding="2" cellspacing="2" class="table">
 	<tr>
-		<th class="tableth">비밀번호</th>
-		<td class="tabletd"><input type="password" name="passwd" maxlength="12"></td>
+		<th class="tableth" colspan="2">삭제 하시겠습니까?</th>
 	</tr>
 		<tr>
-			<td class="tabletd" colspan="2">
+			<td class="tabletd" colspan="2" align="center">
 				<input type="submit" value="삭제" class="btn">
 				<input type="button" value="취소" class="btn" onclick="history.go(-1)">
 			</td>

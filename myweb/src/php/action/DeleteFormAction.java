@@ -18,7 +18,7 @@ public class DeleteFormAction extends HttpServlet implements CommandAction {
 		req.setAttribute("num", new Integer(num));
 		req.setAttribute("pageNum", new Integer(pageNum));
 				
-		return "/mvc2bbs/deleteForm.jsp";
+		return "/phpbbs/deleteForm.jsp";
 	}
 
 }  //------------------------------------------------------class DeleteFormAction end

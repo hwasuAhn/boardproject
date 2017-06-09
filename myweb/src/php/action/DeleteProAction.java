@@ -15,16 +15,15 @@ public class DeleteProAction extends HttpServlet implements CommandAction {
 		
 		int num=Integer.parseInt(req.getParameter("num"));
 		String pageNum=req.getParameter("pageNum");
-		String passwd=req.getParameter("passwd");
 				
 		BoardDBBean dbPro=BoardDBBean.getInstance();
-		int check=dbPro.deleteArticle(num, passwd);
+		int check=dbPro.deleteArticle(num);
 		
 		//�ش�信�� ����� �Ӽ�
 		req.setAttribute("pageNum", new Integer(pageNum));
 		req.setAttribute("check", new Integer(check));
 		
-		return "/mvc2bbs/deletePro.jsp";
+		return "/phpbbs/deletePro.jsp";
 	}
 
 }  //-----------------------------------------------class DeleteProAction end

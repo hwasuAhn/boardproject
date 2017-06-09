@@ -244,32 +244,20 @@ public class BoardDBBean {
 	}
 	
 	//�� ����
-	public int deleteArticle(int num, String passwd) throws Exception {
+	public int deleteArticle(int num) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String dbpasswd="";
-		int x=-1;
+		int x = 0;
+
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? ");
+			pstmt=conn.prepareStatement("DELETE FROM php_board WHERE num=? ");
 			pstmt.setInt(1, num);
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()){
-				dbpasswd=rs.getString("passwd");
-				if(dbpasswd.equals(passwd))
-				{
-					pstmt=conn.prepareStatement("DELETE FROM board WHERE num=? ");
-					pstmt.setInt(1, num);
-					pstmt.executeUpdate();
-					x=1;  //�� ���� ����
-				}
-				else
-				{
-					x=0;  //��й�ȣ Ʋ��
-				}
-			}
+			pstmt.executeUpdate();
+			x = 1;
+
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -277,6 +265,7 @@ public class BoardDBBean {
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
 		}  //try end
+		
 		return x;
 	}  //deleteArticle end
 	
