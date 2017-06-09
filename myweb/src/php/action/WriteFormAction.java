@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import my.action.CommandAction;
+
 public class WriteFormAction extends HttpServlet implements CommandAction {
 
 	//@Override

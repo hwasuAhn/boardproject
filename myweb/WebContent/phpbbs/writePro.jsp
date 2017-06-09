@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <jsp:include page="../main.jsp"/>
-<meta http-equiv="Refresh" content="0;url=/myweb/mvc2bbs/list.do">
+<meta http-equiv="Refresh" content="0;url=/myweb/mvc2bbs/phplist.do">
 <div id="content" align="center">
 	<!--  -->
 	<!-- 본문 시작 -->

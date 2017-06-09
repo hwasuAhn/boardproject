@@ -29,17 +29,21 @@
 	 		<c:set var="reg" value="${article.reg_date }"/>
     		<c:set var="date" value="${fn:substring(reg, 0,10) }"/> <!-- 게시글 날짜를 2012-12-03 -->
 	 		<td class="tabletd" align='left' width="200">${date}</td>
-	 		<th bgcolor="#b0e0e6" height='21' width="80" class="tabletd_d">IIP주소</th>
+	 		<th bgcolor="#b0e0e6" height='21' width="80" class="tabletd_d">IP주소</th>
 	 		<td class="tabletd" align='left'>${article.ip }</td>
 		</tr>
 		</table>
 		<table border="0" cellpadding="10" cellspacing="0" width="600">
 		<tr>			
 			<td colspan=4>
-			<input type="button" value="글수정" class="btn" onclick="document.location.href='/myweb/mvc2bbs/update.do?num=${article.num}&pageNum=${pageNum}'">
-			<input type="button" value="글삭제" class="btn" onclick="document.location.href='/myweb/mvc2bbs/deleteForm.do?num=${article.num}&pageNum=${pageNum}'">
-			<input type="button" value="답변"  class="btn" onclick="document.location.href='/myweb/mvc2bbs/writeForm.do?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
-			<input type="button" value="목록" class="btn" onclick="document.location.href='/myweb/mvc2bbs/list.do?pageNum=${pageNum}'">
+			<c:if test="${article.writer == id}">
+			<input type="button" value="글수정" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpupdate.do?num=${article.num}&pageNum=${pageNum}'">
+			<input type="button" value="글삭제" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpdeleteForm.do?num=${article.num}&pageNum=${pageNum}'">
+			</c:if>
+			<c:if test="${id != 'guest' }">
+			<input type="button" value="답변"  class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpwriteForm.do?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
+			</c:if>
+			<input type="button" value="목록" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phplist.do?pageNum=${pageNum}'">
 			</td>
 		</tr>
 	</table>

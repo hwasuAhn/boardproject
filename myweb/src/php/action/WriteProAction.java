@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import my.board.BoardDBBean;
-import my.board.BoardDataBean;
+import my.action.CommandAction;
+import php.board.BoardDBBean;
+import php.board.BoardDataBean;
 
 public class WriteProAction extends HttpServlet implements CommandAction {
 	
@@ -15,12 +16,14 @@ public class WriteProAction extends HttpServlet implements CommandAction {
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp)
 			throws Throwable {
 		req.setCharacterEncoding("euc-kr");
+		BoardDBBean check = BoardDBBean.getInstance();
+		BoardDataBean user = check.getMember(req.getParameter("id"));
+		
 		BoardDataBean article=new BoardDataBean();
 		article.setNum(Integer.parseInt(req.getParameter("num")));
-		article.setWriter(req.getParameter("writer"));
-		article.setEmail(req.getParameter("email"));
+		article.setWriter(user.getWriter());
+		article.setEmail(user.getEmail());
 		article.setSubject(req.getParameter("subject"));
-		article.setPasswd(req.getParameter("passwd"));
 		article.setReg_date(new Timestamp(System.currentTimeMillis()));
 		article.setRef(Integer.parseInt(req.getParameter("ref")));
 		article.setRe_step(Integer.parseInt(req.getParameter("re_step")));
@@ -31,7 +34,7 @@ public class WriteProAction extends HttpServlet implements CommandAction {
 		BoardDBBean dbPro=BoardDBBean.getInstance();
 		dbPro.insertArticle(article);
 		
-		return "/mvc2bbs/writePro.jsp";
+		return "/phpbbs/writePro.jsp";
 	}
 
 }

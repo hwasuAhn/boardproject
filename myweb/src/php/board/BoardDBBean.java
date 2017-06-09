@@ -30,6 +30,33 @@ public class BoardDBBean {
 	
 	//�Ʒ� ������ DB���� �޼ҵ� �ۼ�
 	
+	
+	public BoardDataBean getMember(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = " select id, email from member where id = ? ";
+		
+		try {
+			conn=getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				BoardDataBean article = new BoardDataBean();
+				article.setWriter(rs.getString("id"));
+				article.setEmail(rs.getString("email"));
+				
+				return article;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	//insert()�޼ҵ� �߰�
 	public void insertArticle(BoardDataBean article) throws Exception {
 		Connection conn=null;
@@ -45,7 +72,7 @@ public class BoardDBBean {
 		
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT max(num) FROM board ");
+			pstmt=conn.prepareStatement(" SELECT max(num) FROM php_board ");
 			rs=pstmt.executeQuery();
 			
 			if(rs.next())
@@ -55,7 +82,7 @@ public class BoardDBBean {
 			
 			if(num!=0)
 			{
-				sql=" UPDATE board SET re_step=re_step+1 WHERE ref=? AND re_step>? ";
+				sql=" UPDATE php_board SET re_step=re_step+1 WHERE ref=? AND re_step>? ";
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, ref);
 				pstmt.setInt(2, re_step);
@@ -70,20 +97,19 @@ public class BoardDBBean {
 				re_level=0;
 			}
 			
-			sql=" INSERT INTO board(num, writer, email, subject, passwd, reg_date, ";
-			sql+=" ref, re_step, re_level, content, ip) VALUES(board_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			sql=" INSERT INTO php_board(num, writer, email, subject, reg_date, ";
+			sql+=" ref, re_step, re_level, content, ip) VALUES(php_board_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, article.getWriter());
 			pstmt.setString(2, article.getEmail());
 			pstmt.setString(3, article.getSubject());
-			pstmt.setString(4, article.getPasswd());
-			pstmt.setTimestamp(5, article.getReg_date());
-			pstmt.setInt(6, ref);
-			pstmt.setInt(7, re_step);
-			pstmt.setInt(8, re_level);
-			pstmt.setString(9, article.getContent());
-			pstmt.setString(10, article.getIp());
+			pstmt.setTimestamp(4, article.getReg_date());
+			pstmt.setInt(5, ref);
+			pstmt.setInt(6, re_step);
+			pstmt.setInt(7, re_level);
+			pstmt.setString(8, article.getContent());
+			pstmt.setString(9, article.getIp());
 			pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -128,7 +154,7 @@ public class BoardDBBean {
 		sql+=" 		FROM ( ";
 		sql+=" 			SELECT ROWNUM as RNUM, b.* ";
 		sql+=" 			FROM ( ";
-		sql+=" 				SELECT * FROM board ORDER BY ref DESC, re_step ASC ";
+		sql+=" 				SELECT * FROM php_board ORDER BY ref DESC, re_step ASC ";
 		sql+=" 				)b ";
 		sql+=" 			)a ";
 		sql+=" 			WHERE a.RNUM>=? AND a.RNUM<=? ";
@@ -183,12 +209,12 @@ public class BoardDBBean {
 		
 		try {
 			conn=getConnection();
-			String sql=" UPDATE board SET readcount=readcount+1 where num=? ";
+			String sql=" UPDATE php_board SET readcount=readcount+1 where num=? ";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
 			
-			sql="SELECT * FROM board WHERE num=? ";
+			sql="SELECT * FROM php_board WHERE num=? ";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
@@ -199,7 +225,6 @@ public class BoardDBBean {
 				article.setWriter(rs.getString("writer"));
 				article.setEmail(rs.getString("email"));
 				article.setSubject(rs.getString("subject"));
-				article.setPasswd(rs.getString("passwd"));
 				article.setReg_date(rs.getTimestamp("reg_date"));
 				article.setReadcount(rs.getInt("readcount"));
 				article.setRef(rs.getInt("ref"));

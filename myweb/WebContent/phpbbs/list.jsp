@@ -15,9 +15,11 @@
 		<tr>
 			<td>게시판에 글 없음!</td>
 		</tr>
+		<c:if test="${memid != 'guest' }">
 		<tr>
-			<td><a href="/myweb/phpbbs/writeForm.do"><img src="../images/bt_write.gif" border="0"/></a></td>
+			<td><a href="/myweb/mvc2bbs/phpwriteForm.do"><img src="../images/bt_write.gif" border="0"/></a></td>
 		</tr>
+		</c:if>
 	</table>
 </c:if>	
 <c:if test="${count>0}">
@@ -45,7 +47,7 @@
 					<c:if test="${article.re_level==0}">
 						<img src="images/level.gif" border="0" width="${5*article.re_level}" height="16" />
 					</c:if>
-					<a href="/myweb/mvc2bbs/content.do?num=${article.num}&pageNum=${currentPage}">${article.subject}</a>
+					<a href="/myweb/mvc2bbs/phpcontent.do?id=${memid}&num=${article.num}&pageNum=${currentPage}">${article.subject}</a>
 					<c:if test="${today == date}">
     					<img src="../images/new.gif"/>
     				</c:if>
@@ -82,14 +84,14 @@
 		<c:set var="endPage" value="${pageCount}" />
 	</c:if>
 	<c:if test="${startPage>2 }">
-		<a href="/myweb/mvc2bbs/list.do?pageNum=${startPage2-1 }">[이전]</a>
+		<a href="/myweb/mvc2bbs/phplist.do?pageNum=${startPage2-1 }">[이전]</a>
 	</c:if>
 	<c:forEach var="i" begin="${startPage}" end="${endPage}" >
-		<a href="/myweb/mvc2bbs/list.do?pageNum=${i}">[${i}]</a>
+		<a href="/myweb/mvc2bbs/phplist.do?pageNum=${i}">[${i}]</a>
 	</c:forEach>
 	<c:if test="${endPage<pageCount}">
 		
-		<a href="/myweb/mvc2bbs/list.do?pageNum=${endPage2}">[다음]</a>
+		<a href="/myweb/mvc2bbs/phplist.do?pageNum=${endPage2}">[다음]</a>
 	</c:if>
 </c:if>
 <br/>
