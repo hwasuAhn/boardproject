@@ -20,24 +20,24 @@ import org.omg.PortableServer.RequestProcessingPolicy;
 
 public class ControllerAction extends HttpServlet {
 
-	private Map commandMap=new HashMap();  //¸í·É¾î¿Í ¸í·É¾î Ã³¸® Å¬·¡½º¸¦ ½ÖÀ¸·Î ÀúÀå
+	private Map commandMap=new HashMap();  //ëª…ë ¹ì–´ì™€ ëª…ë ¹ì–´ ì²˜ë¦¬ í´ë˜ìŠ¤ë¥¼ ìŒìœ¼ë¡œ ì €ì¥
 	
-	//¸í·É¾î¿Í Ã³¸®Å¬·¡½º°¡ ¸ÅÇÎµÇ¾î ÀÖ´Â propertiesÆÄÀÏÀ» ÀĞ¾î¼­ Map°´Ã¼ÀÎ commandMap¿¡ ÀúÀå
-	//¸í·É¾î¿Í Ã³¸®Å¬·¡½º°¡ ¸ÅÇÎµÇ¾î ÀÖ´Â propertiesÆÄÀÏÀº Command.propertiesÆÄÀÏ
+	//ëª…ë ¹ì–´ì™€ ì²˜ë¦¬í´ë˜ìŠ¤ê°€ ë§¤í•‘ë˜ì–´ ìˆëŠ” propertiesíŒŒì¼ì„ ì½ì–´ì„œ Mapê°ì²´ì¸ commandMapì— ì €ì¥
+	//ëª…ë ¹ì–´ì™€ ì²˜ë¦¬í´ë˜ìŠ¤ê°€ ë§¤í•‘ë˜ì–´ ìˆëŠ” propertiesíŒŒì¼ì€ Command.propertiesíŒŒì¼
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		//web.xml¿¡¼­ propertyConfig¿¡ ÇØ´çÇÏ´Â init-paramÀÇ °ªÀ» ÀĞ¾î¿È
+		//web.xmlì—ì„œ propertyConfigì— í•´ë‹¹í•˜ëŠ” init-paramì˜ ê°’ì„ ì½ì–´ì˜´
 		String props=config.getInitParameter("propertyConfig");
 		
-		//¸í·É¾î¿Í Ã³¸®Å¬·¡½ºÀÇ ¸ÅÇÎÁ¤º¸¸¦ ÀúÀåÇÒ Properties°´Ã¼ »ı¼º
+		//ëª…ë ¹ì–´ì™€ ì²˜ë¦¬í´ë˜ìŠ¤ì˜ ë§¤í•‘ì •ë³´ë¥¼ ì €ì¥í•  Propertiesê°ì²´ ìƒì„±
 		Properties pr=new Properties();
 		FileInputStream f=null;
 		
 		try {
-			//Command.propertiesÆÄÀÏÀÇ ³»¿ëÀ» ÀĞ¾î¿È
+			//Command.propertiesíŒŒì¼ì˜ ë‚´ìš©ì„ ì½ì–´ì˜´
 			f=new FileInputStream(props);
-			//Command.propertiesÆÄÀÏÀÇ Á¤º¸¸¦ Properties°´Ã¼¿¡ÀúÀå
+			//Command.propertiesíŒŒì¼ì˜ ì •ë³´ë¥¼ Propertiesê°ì²´ì—ì €ì¥
 			pr.load(f);
 		} catch(IOException e) {
 			throw new ServletException(e);
@@ -45,21 +45,21 @@ public class ControllerAction extends HttpServlet {
 			if(f!=null) try { f.close(); } catch(IOException ex) {}
 		}  //try end
 		
-		//Iterator°´Ã¼´Â Enumeration°´Ã¼¸¦ È®Àå½ÃÅ² °³³äÀÇ °´Ã¼
+		//Iteratorê°ì²´ëŠ” Enumerationê°ì²´ë¥¼ í™•ì¥ì‹œí‚¨ ê°œë…ì˜ ê°ì²´
 		Iterator keyiter=pr.keySet().iterator();
-		//°´Ã¼¸¦ ÇÏ³ª¾¿ ²¨³»¼­ ±× °´Ã¼¸íÀ¸·Î Properties°´Ã¼¿¡ ÀúÀåµÈ °´Ã¼¿¡ Á¢±Ù
+		//ê°ì²´ë¥¼ í•˜ë‚˜ì”© êº¼ë‚´ì„œ ê·¸ ê°ì²´ëª…ìœ¼ë¡œ Propertiesê°ì²´ì— ì €ì¥ëœ ê°ì²´ì— ì ‘ê·¼
 		while(keyiter.hasNext()) {
-			String command=(String)keyiter.next();  //¼­ºí¸´¸ÅÇÎ ¸í·É¾î
-			String className=pr.getProperty(command);  //½ÇÁ¦ ½ÇÇàÇØ¾ßÇÏ´Â Å¬·¡½º
+			String command=(String)keyiter.next();  //ì„œë¸”ë¦¿ë§¤í•‘ ëª…ë ¹ì–´
+			String className=pr.getProperty(command);  //ì‹¤ì œ ì‹¤í–‰í•´ì•¼í•˜ëŠ” í´ë˜ìŠ¤
 			System.out.println(command);
 			System.out.println(className);
 			
 			try {
-				//ÇØ´ç ¹®ÀÚ¿­À» Å¬·¡½º·Î ¸¸µç´Ù
+				//í•´ë‹¹ ë¬¸ìì—´ì„ í´ë˜ìŠ¤ë¡œ ë§Œë“ ë‹¤
 				Class commandClass=Class.forName(className);
-				//ÇØ´çÅ¬·¡½ºÀÇ °´Ã¼¸¦ »ı¼º
+				//í•´ë‹¹í´ë˜ìŠ¤ì˜ ê°ì²´ë¥¼ ìƒì„±
 				Object commandInstance=commandClass.newInstance();
-				//Map°´Ã¼ÀÎ commandMap¿¡ °´Ã¼ÀúÀå
+				//Mapê°ì²´ì¸ commandMapì— ê°ì²´ì €ì¥
 				commandMap.put(command, commandInstance);
 			} catch(ClassNotFoundException e) {
 				throw new ServletException(e);
@@ -71,19 +71,19 @@ public class ControllerAction extends HttpServlet {
 		}
 	}  //init(config) end
 	
-	@Override  //GET ¹æ½Ä
+	@Override  //GET ë°©ì‹
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		requestProcess(req, resp);
 	}
 	
-	@Override  //POST ¹æ½Ä
+	@Override  //POST ë°©ì‹
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		requestProcess(req, resp);
 	}
 	
-	//»ç¿ëÀÚÀÇ ¿äÃ»À» ºĞ¼®ÇØ¼­ ÇØ´ç ÀÛ¾÷À» Ã³¸®
+	//ì‚¬ìš©ìì˜ ìš”ì²­ì„ ë¶„ì„í•´ì„œ í•´ë‹¹ ì‘ì—…ì„ ì²˜ë¦¬
 	protected void requestProcess(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String view=null;
@@ -92,7 +92,7 @@ public class ControllerAction extends HttpServlet {
 			String command=req.getRequestURI();
 			if(command.indexOf(req.getContextPath())==0){}
 			System.out.println(command);
-			com=(CommandAction)commandMap.get(command);  //»ó¼ÓÀÇ ´ÙÇü¼º
+			com=(CommandAction)commandMap.get(command);  //ìƒì†ì˜ ë‹¤í˜•ì„±
 			view=com.requestPro(req, resp);
 			System.out.println(view);
 		} catch(Throwable e) {
