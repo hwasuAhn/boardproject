@@ -16,17 +16,16 @@ public class UpdateFormAction extends HttpServlet implements CommandAction {
 		
 		int num=Integer.parseInt(req.getParameter("num"));
 		String pageNum=req.getParameter("pageNum");
-		String passwd=req.getParameter("passwd");
 		BoardDataBean article=null;		
 		BoardDBBean dbPro=BoardDBBean.getInstance();
 		//int check=dbPro.updateCheckArticle(num, passwd);
-		article=dbPro.updateGetArticle(num, passwd);
+		article=dbPro.updateGetArticle(num);
 				
 		//�ش�信�� ����� �Ӽ�
 		req.setAttribute("pageNum", new Integer(pageNum));
 		//req.setAttribute("check", new Integer(check));
 		req.setAttribute("article", article);
-		return "/mvc2bbs/updateForm.jsp";
+		return "/phpbbs/updateForm.jsp";
 	}
 
 }

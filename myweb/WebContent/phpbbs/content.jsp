@@ -37,7 +37,7 @@
 		<tr>			
 			<td colspan=4>
 			<c:if test="${article.writer == id}">
-			<input type="button" value="글수정" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpupdate.do?num=${article.num}&pageNum=${pageNum}'">
+			<input type="button" value="글수정" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpupdateForm.do?num=${article.num}&pageNum=${pageNum}'">
 			<input type="button" value="글삭제" class="btn" onclick="document.location.href='/myweb/mvc2bbs/phpdeleteForm.do?num=${article.num}&pageNum=${pageNum}'">
 			</c:if>
 			<c:if test="${id != 'guest' }">

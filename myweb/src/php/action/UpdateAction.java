@@ -18,7 +18,7 @@ public class UpdateAction extends HttpServlet implements CommandAction {
 		req.setAttribute("num", new Integer(num));
 		req.setAttribute("pageNum", new Integer(pageNum));
 				
-		return "/mvc2bbs/update.jsp";
+		return "/phpbbs/update.jsp";
 	}
 
 }  //---------------------------------class UpdateAction end

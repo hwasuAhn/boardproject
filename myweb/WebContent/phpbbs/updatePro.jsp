@@ -9,7 +9,7 @@
 	<!-- 본문 시작 -->
 	<img src="../images/j_board_notice_mvc.gif"/><br/><br/>
 <c:if test="${check==1}">
-	<meta http-equiv="Refresh" content="0;url=/myweb/mvc2bbs/list.do?pageNum=${pageNum}">
+	<meta http-equiv="Refresh" content="0;url=/myweb/mvc2bbs/phplist.do?pageNum=${pageNum}">
 </c:if>
 <c:if test="${check==0}">
 	수정 실패

@@ -29,7 +29,7 @@
 	 		<c:set var="reg" value="${article.reg_date }"/>
     		<c:set var="date" value="${fn:substring(reg, 0,10) }"/> <!-- 게시글 날짜를 2012-12-03 -->
 	 		<td class="tabletd" align='left' width="200">${date}</td>
-	 		<th bgcolor="#b0e0e6" height='21' width="80" class="tabletd_d">IIP주소</th>
+	 		<th bgcolor="#b0e0e6" height='21' width="80" class="tabletd_d">IP주소</th>
 	 		<td class="tabletd" align='left'>${article.ip }</td>
 		</tr>
 		</table>

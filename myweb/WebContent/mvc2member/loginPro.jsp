@@ -15,7 +15,7 @@
 	-->
 		<c:set var="memid" value="${sessionScope.s_id2 }" scope="session"/>
 		<c:set var="s_mlevel" value="${sessionScope.s_mlevel }" scope="session"/>
-		<meta http-equiv="Refresh" content="0;url=/myweb/mvc2member/loginForm.do">
+		<meta http-equiv="Refresh" content="0;url=/myweb/index.jsp">
 	</c:if>
 	<c:if test="${res==0 }">
 	<!-- 

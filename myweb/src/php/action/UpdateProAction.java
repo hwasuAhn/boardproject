@@ -21,7 +21,6 @@ public class UpdateProAction extends HttpServlet implements CommandAction {
 		article.setWriter(req.getParameter("writer"));
 		article.setEmail(req.getParameter("email"));
 		article.setSubject(req.getParameter("subject"));
-		article.setPasswd(req.getParameter("passwd"));
 		article.setContent(req.getParameter("content"));
 		
 		BoardDBBean dbPro=BoardDBBean.getInstance();
@@ -29,7 +28,7 @@ public class UpdateProAction extends HttpServlet implements CommandAction {
 		
 		req.setAttribute("pageNum", new Integer(pageNum));
 		req.setAttribute("check", new Integer(check));
-		return "/mvc2bbs/updatePro.jsp";
+		return "/phpbbs/updatePro.jsp";
 	}
 
 }  //-----------------------------------class UpdateProAction end

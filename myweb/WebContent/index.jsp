@@ -1,3 +1,4 @@
+<%@page import="my.board.BoardDataBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,8 +16,8 @@
 <jsp:useBean id="noticeDao" class="www.notice.NoticeDAO" scope="page"/>
 <jsp:useBean id="bbsDto" class="www.bbs.BbsDTO" scope="page"/>
 <jsp:useBean id="bbsDao" class="www.bbs.BbsDAO" scope="page"/>
-<jsp:useBean id="pdsDto" class="www.pds.PdsDTO" scope="page"/>
-<jsp:useBean id="pdsMgr" class="www.pds.PdsMgr" scope="page"/>
+<jsp:useBean id="mvcbbsDto" class="my.board.BoardDataBean" scope="page"/>
+<jsp:useBean id="phpbbsDto" class="php.board.BoardDataBean" scope="page"/>
 <%
 //------------------
 //페이징 관련 부분
@@ -204,10 +205,11 @@ function getCookie(name) {
 			<a href="mvc2member/loginForm.do"><img src="images/top_bt_login.gif"/></a>
 			<a href="mvc2member/agreement.do"><img src="images/top_bt_join.gif"/></a>
 			</c:if>
-			<c:if test="${memid != 'guest'} ">
+			<c:if test="${memid != 'guest'}">
 			<a href="mvc2member/logout.do"><img src="images/top_bt_logout.gif"/></a>
 			<a href="mvc2member/loginForm.do"><img src="images/top_mypage.gif"/></a>
 			</c:if>
+			
 			</td>
 			</tr>
 			</table>
@@ -236,6 +238,9 @@ function getCookie(name) {
             </tr>
 			<tr>
                <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2bbs/list.do">익명 게시판(MVC)</a></td>
+            </tr>
+            <tr>
+               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="mvc2bbs/phplist.do">PHP 개발자 게시판</a></td>
             </tr>
 			</table>
 			
@@ -271,7 +276,7 @@ function getCookie(name) {
 				        <table width="300" border="0" cellpadding="0" cellspacing="0" class="table">
 				                <tr>
 				                    <td height="30"  style="vertical-align:middle;" align="left">
-				                       &nbsp; BOARD_REPLY <br/> &nbsp; <font style="font-size:12px ">최근 작성 글</font> 
+				                       &nbsp; 익명 게시판 <br/> &nbsp; <font style="font-size:12px ">최근 작성 글</font> 
 				                    </td>
 				                    <td align="right" style="font-size:12px; vertical-align:bottom;">
 				                       <a href="./bbs/bbsList.jsp"> more</a> <img src="images/arrow.gif"/>&nbsp; &nbsp; 
@@ -383,6 +388,78 @@ function getCookie(name) {
 					</table>
 					</div>
 				</div>
+				<div style="width:620px; border:0px; " align="center">
+				    <div style="width:300px; float:left; margin-right:10px;">
+				        <table width="300" border="0" cellpadding="0" cellspacing="0" class="table">
+				            <tr>
+				                <td height="30"  style="vertical-align:middle;" align="left">
+				                   &nbsp; JSP 개발자 게시판 <br/> &nbsp; <font style="font-size:12px ">최근 작성 글</font> 
+				                </td>
+				                <td align="right" style="font-size:12px; vertical-align:bottom;">
+				                   <a href="mvc2bbs/list.do"> more</a> <img src="images/arrow.gif"/>&nbsp; &nbsp; 
+				                </td>
+				            </tr>
+				        </table>
+				    </div>
+				    <div style="width:300px; float:left; ">
+				        <table width="300" border="0" cellpadding="0" cellspacing="0" class="table">
+				                <tr>
+				                    <td height="30"  style="vertical-align:middle;" align="left">
+				                       &nbsp; PHP 개발자 게시판 <br/> &nbsp; <font style="font-size:12px ">최근 작성 글</font> 
+				                    </td>
+				                    <td align="right" style="font-size:12px; vertical-align:bottom;">
+				                       <a href="mvc2bbs/phplist.do"> more</a> <img src="images/arrow.gif"/>&nbsp; &nbsp; 
+				                    </td>
+				                </tr>
+				            </table>
+				    </div>
+				</div>
+				<div style="width:620px; border:0px; " align="center">
+    				<div style="width:300px; float:left; margin-right:10px; margin-top:5px; margin-bottom:10px;  ">
+    	<%
+	       	ArrayList<BoardDataBean> jspDTO = bbsDao.listMainJsp(); 
+	    	if(jspDTO==null)
+			{
+				out.print("게시글 없음");
+			}
+			else
+			{
+		%>			            	
+       				<table width="300" border='0'  cellspacing="0">
+       				<tr align='center' height="21">      	
+             			<th class="tableth" >제목</th>        
+              			<th class="tableth" >작성일</th>
+           			 </tr>      				
+    	<%
+    		
+		    	for(int idx=0; idx<jspDTO.size(); idx++)
+				{
+					mvcbbsDto=jspDTO.get(idx);  //ArrayList에서 한줄 가져오기
+					out.print("<tr>");
+					
+					out.print("<td width=250 align=left class='tabletd' height='25'>");
+					
+					
+			 		out.print("<a href='mvc2bbs/content.do?pageNum="+nowPage+"&num="+mvcbbsDto.getNum()+"'>"+mvcbbsDto.getSubject()+"</a>");
+			 		
+			 		//오늘 게시물에 new이미지 추가
+			 		String today=Utility.getDate();  //2013-05-01;
+			 		String dt = mvcbbsDto.getReg_date().toString();
+			 		String regdt=dt.substring(0, 10);
+			 		if(regdt.equals(today))
+			 		{
+			 			out.print("<img src='./images/new.gif'>");
+			 		}		 				 		
+			 		out.print("</td>");		
+					out.print(" <td width=100 class='tabletd' height='25'>"+regdt+"</td>");
+					out.print("</tr>");
+				}
+			}
+	    %>				
+	    			</table>
+					</div>
+				
+	
 					
 		<!-- 본문 끝 -->
 			</div>

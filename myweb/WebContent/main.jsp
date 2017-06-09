@@ -80,6 +80,9 @@
 				<tr>
 					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/list.do">익명 게시판(MVC)</a></td>
 				</tr>
+				<tr>
+					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/phplist.do">PHP 개발자 게시판</a></td>
+				</tr>
 				</table>
 				<br/>				
 				<img src="../images/member.gif"/>

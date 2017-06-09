@@ -12,6 +12,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import www.bbs.BbsDTO;
+import www.utility.DBClose;
+
 public class BoardDBBean {
 
 	private BoardDBBean() {}

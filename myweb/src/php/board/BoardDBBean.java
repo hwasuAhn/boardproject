@@ -304,7 +304,7 @@ public class BoardDBBean {
 	}  //updateCheckArticle end
 	
 	//�� ���� ��
-	public BoardDataBean updateGetArticle(int num, String passwd) throws Exception {
+	public BoardDataBean updateGetArticle(int num) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -312,41 +312,24 @@ public class BoardDBBean {
 		BoardDataBean article=null;
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? ");
+			String sql=" SELECT * FROM php_board WHERE num=? ";
+			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
 			
-			if(rs.next()){
-				dbpasswd=rs.getString("passwd");
-				if(dbpasswd.equals(passwd))
-				{
-					//��й�ȣ ��ġ
-					String sql=" SELECT * FROM board WHERE num=? ";
-					pstmt=conn.prepareStatement(sql);
-					pstmt.setInt(1, num);
-					rs=pstmt.executeQuery();
-					if(rs.next())
-					{
-						article=new BoardDataBean();
-						article.setNum(rs.getInt("num"));
-						article.setWriter(rs.getString("writer"));
-						article.setEmail(rs.getString("email"));
-						article.setSubject(rs.getString("subject"));
-						article.setPasswd(rs.getString("passwd"));
-						article.setReg_date(rs.getTimestamp("reg_date"));
-						article.setReadcount(rs.getInt("readcount"));
-						article.setRef(rs.getInt("ref"));
-						article.setRe_step(rs.getInt("re_step"));
-						article.setRe_level(rs.getInt("re_level"));
-						article.setContent(rs.getString("content"));
-						article.setIp(rs.getString("ip"));						
-					}
-				}
-				else
-				{
-					//��й�ȣ Ʋ��
-					article=null;
-				}
+			if(rs.next()) {
+				article=new BoardDataBean();
+				article.setNum(rs.getInt("num"));
+				article.setWriter(rs.getString("writer"));
+				article.setEmail(rs.getString("email"));
+				article.setSubject(rs.getString("subject"));
+				article.setReg_date(rs.getTimestamp("reg_date"));
+				article.setReadcount(rs.getInt("readcount"));
+				article.setRef(rs.getInt("ref"));
+				article.setRe_step(rs.getInt("re_step"));
+				article.setRe_level(rs.getInt("re_level"));
+				article.setContent(rs.getString("content"));
+				article.setIp(rs.getString("ip"));						
 			}
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -367,21 +350,20 @@ public class BoardDBBean {
 		int x=-1;
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT * FROM board WHERE num=? ");
+			pstmt=conn.prepareStatement(" SELECT * FROM php_board WHERE num=? ");
 			pstmt.setInt(1, article.getNum());
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
-				sql=" UPDATE board SET writer=?, email=?, subject=?, passwd=?, ";
+				sql=" UPDATE php_board SET writer=?, email=?, subject=?, ";
 				sql+=" content=? WHERE num=? ";
 				pstmt=conn.prepareStatement(sql);
 				//System.out.println(sql);
 				pstmt.setString(1, article.getWriter());
 				pstmt.setString(2, article.getEmail());
 				pstmt.setString(3, article.getSubject());
-				pstmt.setString(4, article.getPasswd());
-				pstmt.setString(5, article.getContent());
-				pstmt.setInt(6, article.getNum());
+				pstmt.setString(4, article.getContent());
+				pstmt.setInt(5, article.getNum());
 				pstmt.executeUpdate();
 				x=1;
 			}
