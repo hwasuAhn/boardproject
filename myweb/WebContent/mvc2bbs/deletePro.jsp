@@ -12,9 +12,9 @@
 	<meta http-equiv="Refresh" content="0;url=/myweb/mvc2bbs/list.do?pageNum=${pageNum}">
 </c:if>
 <c:if test="${check==0}">
-	비밀번호가 다릅니다
+	사용자의글이 아닙니다. 
 <br/>
-<a href="javascript:history.go(-1)">[글 삭제폼으로 돌아가기]</a>
+<a href="javascript:history.go(-1)">[돌아가기]</a>
 </c:if>
 <!-- 본문 끝 -->
 </div>

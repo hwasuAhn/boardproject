@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:if test="${sessionScope.s_id2 != null }">
 	<c:set var="memid" value="${sessionScope.s_id2 }" scope="session"/>
+	<c:set var="mempw" value="${sessionScope.s_passwd2 }" scope="session"/>
 	<c:set var="s_mlevel" value="${sessionScope.s_mlevel }" scope="session"/>
 </c:if>
 <c:if test="${sessionScope.s_id2 == null}">
@@ -17,6 +18,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title> My Web </title>
 <link rel="stylesheet" type="text/css" href="../css/mystyle.css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <style type='text/css'>
     .table{
         border-collapse:collapse;
@@ -86,7 +88,7 @@
 					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../bbs/bbsList.jsp">익명 게시판</a></td>
 				</tr>
 				<tr>
-					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/list.do">익명 게시판(MVC)</a></td>
+					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/list.do">JSP 개발자 게시판</a></td>
 				</tr>
 				<tr>
 					<td height="25">&nbsp;<img src="../images/arrow.gif"/>&nbsp;&nbsp;<a href="../mvc2bbs/phplist.do">PHP 개발자 게시판</a></td>

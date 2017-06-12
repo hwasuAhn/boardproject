@@ -34,7 +34,7 @@ public class LoginProAction extends HttpServlet implements CommandAction {
 
 		
 		req.getSession().setAttribute("s_id2", id);
-		//req.getSession().setAttribute("s_passwd2", passwd);
+		req.getSession().setAttribute("s_passwd2", passwd);
 		if(dto!=null)
 		{
 			String mlevel=dto.getMlevel();

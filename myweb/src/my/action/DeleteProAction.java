@@ -1,13 +1,10 @@
 package my.action;
 
-import java.sql.Timestamp;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import my.board.BoardDBBean;
-import my.board.BoardDataBean;
 
 public class DeleteProAction extends HttpServlet implements CommandAction {
 
@@ -18,11 +15,12 @@ public class DeleteProAction extends HttpServlet implements CommandAction {
 		int num=Integer.parseInt(req.getParameter("num"));
 		String pageNum=req.getParameter("pageNum");
 		String passwd=req.getParameter("passwd");
+		String writer=req.getParameter("writer");
 				
 		BoardDBBean dbPro=BoardDBBean.getInstance();
-		int check=dbPro.deleteArticle(num, passwd);
+		int check=dbPro.deleteArticle(num,writer,passwd);
 		
-		//ÇØ´çºä¿¡¼­ »ç¿ëÇÒ ¼Ó¼º
+		//ï¿½Ø´ï¿½ä¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½
 		req.setAttribute("pageNum", new Integer(pageNum));
 		req.setAttribute("check", new Integer(check));
 		

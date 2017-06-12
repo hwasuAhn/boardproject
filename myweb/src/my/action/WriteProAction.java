@@ -15,6 +15,7 @@ public class WriteProAction extends HttpServlet implements CommandAction {
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp)
 			throws Throwable {
 		req.setCharacterEncoding("euc-kr");
+		
 		BoardDataBean article=new BoardDataBean();
 		article.setNum(Integer.parseInt(req.getParameter("num")));
 		article.setWriter(req.getParameter("writer"));

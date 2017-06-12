@@ -10,10 +10,8 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import www.bbs.BbsDTO;
-import www.utility.DBClose;
 
 public class BoardDBBean {
 
@@ -27,13 +25,25 @@ public class BoardDBBean {
 	
 	private Connection getConnection() throws Exception {
 		Context initCtx=new InitialContext();
-		DataSource ds=(DataSource)initCtx.lookup("java:comp/env/jdbc/orcl");
+		//DataSource ds=(DataSource)initCtx.lookup("java:comp/env/jdbc/orcl");
+		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource) envCtx.lookup("jdbc/orcl");
+		
 		return ds.getConnection();
 	}
 	
-	//�Ʒ� ������ DB���� �޼ҵ� �ۼ�
 	
-	//insert()�޼ҵ� �߰�
+//	public static Connection getConnection() throws NamingException, SQLException {
+//		// Connection con = null;
+//		// LogManager.debug("[ConnectManager.getConnection]
+//		// start.......................");
+//		
+//		Context initCtx = new InitialContext();
+//		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+//		DataSource ds = (DataSource) envCtx.lookup("jdbc/OracleDB");
+//		return ds.getConnection();
+//	}
+	
 	public void insertArticle(BoardDataBean article) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -221,17 +231,17 @@ public class BoardDBBean {
 		return article;		
 	}
 	
-	//�� ����
-	public int deleteArticle(int num, String passwd) throws Exception {
+	public int deleteArticle(int num,String writer, String passwd) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String dbpasswd="";
-		int x=-1;
+		int x=0;
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? ");
+			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? and writer=?");
 			pstmt.setInt(1, num);
+			pstmt.setString(2, writer);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -241,11 +251,11 @@ public class BoardDBBean {
 					pstmt=conn.prepareStatement("DELETE FROM board WHERE num=? ");
 					pstmt.setInt(1, num);
 					pstmt.executeUpdate();
-					x=1;  //�� ���� ����
+					x=1;  
 				}
 				else
 				{
-					x=0;  //��й�ȣ Ʋ��
+					x=0;  
 				}
 			}
 		} catch(Exception ex) {
@@ -293,7 +303,7 @@ public class BoardDBBean {
 	}  //updateCheckArticle end
 	
 	//�� ���� ��
-	public BoardDataBean updateGetArticle(int num, String passwd) throws Exception {
+	public BoardDataBean updateGetArticle(int num,String writer, String passwd) throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -301,8 +311,9 @@ public class BoardDBBean {
 		BoardDataBean article=null;
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? ");
+			pstmt=conn.prepareStatement(" SELECT passwd FROM board WHERE num=? and writer = ?");
 			pstmt.setInt(1, num);
+			pstmt.setString(2, writer);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -356,15 +367,18 @@ public class BoardDBBean {
 		int x=-1;
 		try {
 			conn=getConnection();
-			pstmt=conn.prepareStatement(" SELECT * FROM board WHERE num=? ");
+			pstmt=conn.prepareStatement("SELECT * FROM board WHERE num=? and writer=?");
 			pstmt.setInt(1, article.getNum());
+			pstmt.setString(2, article.getWriter());
+			
+			System.out.println(article.getWriter());
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
 				sql=" UPDATE board SET writer=?, email=?, subject=?, passwd=?, ";
-				sql+=" content=? WHERE num=? ";
+				sql+=" content=? WHERE num=?";
 				pstmt=conn.prepareStatement(sql);
-				//System.out.println(sql);
+				System.out.println(sql);
 				pstmt.setString(1, article.getWriter());
 				pstmt.setString(2, article.getEmail());
 				pstmt.setString(3, article.getSubject());

@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="./view/color.jspf" %>
+
 <jsp:include page="../bbsMain4.jsp"/>
 <div id="content" align="center">
 	<!--  -->
@@ -13,11 +14,13 @@
 <input type="hidden" name="ref" value="${ref}">
 <input type="hidden" name="re_step" value="${re_step}">
 <input type="hidden" name="re_level" value="${re_level}">
+<input type="hidden" name="writer" value="${memid}">
+<input type="hidden" name="passwd" value="${mempw}">
 <table width="600" border="1" cellspacing="1" class="table" >
-<tr>
-    <th bgcolor="#b0e0e6" class="tabletd" height="30">작성자</th>
-    <td align="left" class="tabletd"><input type="text" name="writer"></td>  
-</tr>
+<!-- <tr hidden=""> -->
+<!--     <th bgcolor="#b0e0e6" class="tabletd" height="30">작성자</th> -->
+<!--     <td align="left" class="tabletd"><input type="text" name="writer"></td>   -->
+<!-- </tr> -->
 <tr>
     <th bgcolor="#b0e0e6" class="tabletd" height="30">제목</th>
     <td align="left" class="tabletd"><input type="text" name="subject" size="68"></td>
@@ -30,10 +33,10 @@
     <th bgcolor="#b0e0e6" class="tabletd">내용</th>
     <td align="left" class="tabletd"><textarea name="content" rows="10" cols="70"></textarea></td>
 </tr>
-<tr>
-    <th bgcolor="#b0e0e6" class="tabletd" height="30">비밀번호</th>
-    <td align="left" class="tabletd"><input type="password" name="passwd"></td>
-</tr>
+<!-- <tr> -->
+<!--     <th bgcolor="#b0e0e6" class="tabletd" height="30">비밀번호</th> -->
+<!--     <td align="left" class="tabletd"><input type="password" name="passwd"></td> -->
+<!-- </tr> -->
 </table>
 
 <table border="0" cellpadding="5" cellspacing="5" width="600">

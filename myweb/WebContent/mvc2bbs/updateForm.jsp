@@ -15,11 +15,13 @@
 
 <form method="post" name="writeform" action="/myweb/mvc2bbs/updatePro.do?pageNum=${pageNum}" onsubmit="return writeSave()">
 <input type="hidden" name="num" value="${article.num}">	
+<input type="hidden" name="writer" value="${memid}">
+<input type="hidden" name="passwd" value="${mempw}">
 	<table width="600" border="1" cellspacing="1" class="table" >
-	<tr>
-    	<th bgcolor="#b0e0e6" class="tabletd" height="30">작성자</th>
-		<td align="left" class="tabletd"><input type="text" name="writer" value="${article.writer}"></td> 
-	</tr>
+<!-- 	<tr> -->
+<!--     	<th bgcolor="#b0e0e6" class="tabletd" height="30">작성자</th> -->
+<%-- 		<td align="left" class="tabletd"><input type="text" name="writer" value="${article.writer}"></td>  --%>
+<!-- 	</tr> -->
 	<tr>
     	<th bgcolor="#b0e0e6" class="tabletd" height="30">제목</th>
 		<td align="left" class="tabletd"><input type="text" name="subject" size="68" value="${article.subject}"></td>
@@ -32,10 +34,10 @@
     	<th bgcolor="#b0e0e6" class="tabletd">내용</th>
     	<td align="left" class="tabletd"><textarea name="content" rows="10" cols="70">${article.content}</textarea></td>
 	</tr>
-	<tr>
-    	<th bgcolor="#b0e0e6" class="tabletd" height="30">비밀번호</th>
-    	<td align="left" class="tabletd"><input type="password" name="passwd" value="${article.passwd }"></td>
-	</tr>
+<!-- 	<tr> -->
+<!--     	<th bgcolor="#b0e0e6" class="tabletd" height="30">비밀번호</th> -->
+<%--     	<td align="left" class="tabletd"><input type="password" name="passwd" value="${article.passwd }"></td> --%>
+<!-- 	</tr> -->
 	</table>
 	<table border="0" cellpadding="5" cellspacing="5" width="600">
 	<tr>
@@ -52,9 +54,9 @@
 </c:if>
 <c:if test="${article==null }">
 <center>
-	비밀번호가 다릅니다
+	사용자의 글이 아닙니다.
 <br/>
-<a href="javascript:history.go(-1)">[글 수정 비번입력으로 돌아가기]</a>
+<a href="javascript:history.go(-1)">[돌아가기]</a>
 </center>
 </c:if>
 <!-- 본문 끝 -->

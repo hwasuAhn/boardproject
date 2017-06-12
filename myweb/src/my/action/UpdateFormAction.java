@@ -16,12 +16,13 @@ public class UpdateFormAction extends HttpServlet implements CommandAction {
 		int num=Integer.parseInt(req.getParameter("num"));
 		String pageNum=req.getParameter("pageNum");
 		String passwd=req.getParameter("passwd");
+		String writer=req.getParameter("writer");
 		BoardDataBean article=null;		
 		BoardDBBean dbPro=BoardDBBean.getInstance();
 		//int check=dbPro.updateCheckArticle(num, passwd);
-		article=dbPro.updateGetArticle(num, passwd);
+		article=dbPro.updateGetArticle(num,writer,passwd);
 				
-		//ÇØ´çºä¿¡¼­ »ç¿ëÇÒ ¼Ó¼º
+		//ï¿½Ø´ï¿½ä¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½
 		req.setAttribute("pageNum", new Integer(pageNum));
 		//req.setAttribute("check", new Integer(check));
 		req.setAttribute("article", article);

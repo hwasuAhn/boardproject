@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="../main.jsp"/>
+
+
+
 <div id="content" align="center">
 	<!-- 본문 시작 -->
 	<img src="../images/j_board_notice_mvc.gif"/><br/><br/>
@@ -63,7 +66,7 @@
 				<td height="30" colspan="2" align="left">총&nbsp;&nbsp;<font color='blue'><strong>${count}</strong></font> 개의 게시물이 있습니다</td>
 				<td></td>
 			    <td></td>
-			    <td><a href="/myweb/mvc2bbs/writeForm.do"><img src="../images/bt_write.gif" border="0"/></a></td>
+			    <td><a id="write_bbs"><img src="../images/bt_write.gif" border="0"/></a></td>
 			 </tr>		
 			
 	</table>
@@ -100,10 +103,33 @@ currentPage : ${currentPage }<br/>
 count : ${count }<br/>
 number : ${number }<br/>
 endPage 올림 : ${endPage+(1-(endPage%1))%1 }<br/>
- -->
+<%--  --><c:if test="${memid == 'guest' || memid == null }"> --%>
 	<!-- 본문 끝 -->
 	</div>
 </div>
+<script>
+	$(document).ready(function(){
+		
+		$("#write_bbs").click(function(){
+			
+			var session = '${memid}';
+			
+			if( session == 'guest' || session == null)
+			{
+				alert("로그인을 해주세요~!!");
+				location.href="../mvc2member/loginForm.do"
+				return;
+			}
+			else
+			{
+				location.href="/myweb/mvc2bbs/writeForm.do"
+				return;
+			}
+			
+ 		});
+	});
+
+</script>
 
 <jsp:include page="../footer.jsp"/>
 		
