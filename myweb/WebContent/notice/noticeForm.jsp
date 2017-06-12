@@ -12,11 +12,11 @@
 		<table width="450" border="1" cellspacing="1" class="table" >
 		<tr>
 			<th height="30" width="80" class="tableth">제목</th>
-			<td align="left" class="tabletd"><input type="text" name="subject" size="50" value="무궁화꽃이 피었습니다"></td>
+			<td align="left" class="tabletd"><input type="text" name="subject" size="50" value=""></td>
 		</tr>
 		<tr>
 			<th class="tableth">내용</th>
-			<td align="left" class="tabletd"><textarea name="content" rows="10" cols="50">다음주 월요일 휴강!! Why? 석가탄신일</textarea></td>
+			<td align="left" class="tabletd"><textarea name="content" rows="10" cols="50"></textarea></td>
 		</tr>
 		</table>
 		<table border="0" cellpadding="0" cellspacing="0" style="width:450px; margin-top:10px;">

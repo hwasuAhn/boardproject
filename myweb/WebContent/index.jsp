@@ -1,4 +1,4 @@
-<%@page import="my.board.BoardDataBean"%>
+<%@page import="php.board.BoardDataBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -417,7 +417,7 @@ function getCookie(name) {
 				<div style="width:620px; border:0px; " align="center">
     				<div style="width:300px; float:left; margin-right:10px; margin-top:5px; margin-bottom:10px;  ">
     	<%
-	       	ArrayList<BoardDataBean> jspDTO = bbsDao.listMainJsp(); 
+	       	ArrayList<my.board.BoardDataBean> jspDTO = bbsDao.listMainJsp(); 
 	    	if(jspDTO==null)
 			{
 				out.print("게시글 없음");
@@ -458,9 +458,49 @@ function getCookie(name) {
 	    %>				
 	    			</table>
 					</div>
-				
-	
+				<div style="width:300px; float:left; margin-right:10px; margin-top:5px; margin-bottom:10px;  ">
+    	<%
+	       	ArrayList<BoardDataBean> phpDTO = bbsDao.listMainPhp(); 
+	    	if(phpDTO==null)
+			{
+				out.print("게시글 없음");
+			}
+			else
+			{
+		%>			            	
+       				<table width="300" border='0'  cellspacing="0">
+       				<tr align='center' height="21">      	
+             			<th class="tableth" >제목</th>        
+              			<th class="tableth" >작성일</th>
+           			 </tr>      				
+    	<%
+    		
+		    	for(int idx=0; idx<phpDTO.size(); idx++)
+				{
+					phpbbsDto=phpDTO.get(idx);  //ArrayList에서 한줄 가져오기
+					out.print("<tr>");
 					
+					out.print("<td width=250 align=left class='tabletd' height='25'>");
+					
+					
+			 		out.print("<a href='mvc2bbs/phpcontent.do?pageNum="+nowPage+"&num="+phpbbsDto.getNum()+"'>"+phpbbsDto.getSubject()+"</a>");
+			 		
+			 		//오늘 게시물에 new이미지 추가
+			 		String today=Utility.getDate();  //2013-05-01;
+			 		String dt = phpbbsDto.getReg_date().toString();
+			 		String regdt=dt.substring(0, 10);
+			 		if(regdt.equals(today))
+			 		{
+			 			out.print("<img src='./images/new.gif'>");
+			 		}		 				 		
+			 		out.print("</td>");		
+					out.print(" <td width=100 class='tabletd' height='25'>"+regdt+"</td>");
+					out.print("</tr>");
+				}
+			}
+	    %>				
+	    			</table>
+					</div>
 		<!-- 본문 끝 -->
 			</div>
 	</div>

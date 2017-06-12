@@ -17,7 +17,7 @@
           <tr> 
             <th width="20%" class="tableth" align="right">아이디</th>
             <td width="57%" class="tabletd" align="left">
-                <input type="text" name="id" size="15" value='user1' maxlength="12">
+                <input type="text" name="id" size="15" value='' maxlength="12">
                 <input type="button" value="ID중복확인"  class="btn"
                        onclick="idCheck(this.form.id.value)">
                        <!-- 
@@ -31,23 +31,23 @@
           </tr>
          <tr> 
             <th class="tableth" align="right">비밀번호</th>
-            <td class="tabletd" align="left"><input type="password" name="passwd" size="15" value='1234' maxlength="12"></td>
+            <td class="tabletd" align="left"><input type="password" name="passwd" size="15" value='' maxlength="12"></td>
             <td class="tabletd" align="left">비밀번호를 적어주세요.</td>
           </tr>
           <tr> 
             <th class="tableth" align="right">비밀번호 확인</th>
-            <td class="tabletd" align="left"><input type="password" name="repasswd" size="15" value='1234' maxlength="12"> </td>
+            <td class="tabletd" align="left"><input type="password" name="repasswd" size="15" value='' maxlength="12"> </td>
             <td class="tabletd" align="left">비밀번호를 확인합니다.</td>
           </tr>
           <tr> 
             <th class="tableth" align="right">이름</th>
-             <td class="tabletd" align="left"><input type="text" name="mname" size="15" value='왕눈이' maxlength="12"> </td>
+             <td class="tabletd" align="left"><input type="text" name="mname" size="15" value='' maxlength="12"> </td>
              <td class="tabletd" align="left">고객실명을 적어주세요.</td>
           </tr>
           <tr> 
             <th class="tableth" align="right">이메일</th>
              <td class="tabletd" align="left">
-                <input type="text" name="email" size="27"  value='email@mail.com'>
+                <input type="text" name="email" size="27"  value=''>
                 <input type="button" 
                             value="Email 중복확인"  class="btn"
                             onclick="javascript:emailCheck(this.form.email.value)">
@@ -58,13 +58,13 @@
           <tr>  
             <th class="tableth" align="right">전화번호</th>
              <td class="tabletd" align="left">
-                <input type="text" name="tel" value="010-555-1004">
+                <input type="text" name="tel" value="">
             </td>
              <td class="tabletd" align="left">전화번호를 적어주세요.</td>
           </tr>
           <tr>  
             <th class="tableth" align="right">우편번호</th>
-             <td class="tabletd" align="left"><input type="text" name="zipcode" size="10" value='111-111' readonly>
+             <td class="tabletd" align="left"><input type="text" name="zipcode" size="10" value='' readonly>
                  <input type="button" value="우편번호찾기"  class="btn"
                        onclick="javascript:zipCheck()"></td>
              <td class="tabletd" align="left">우편번호를 검색 하세요.</td>
@@ -72,7 +72,7 @@
           <tr>  
             <th class="tableth" align="right">주소</th>
              <td class="tabletd" align="left">
-            <input type="text" name="address1" size="45" value='인천시 남동구 간석4동'><br/>
+            <input type="text" name="address1" size="45" value=''><br/>
             <input type="text" name="address2" size="45" value=''>
             </td>
              <td class="tabletd" align="left">주소를 적어 주세요.</td>
@@ -82,7 +82,7 @@
              <td class="tabletd" align="left"><select name='job'>
                     <option value="0">선택하세요.</option>
                     <option value="A01">회사원</option>
-                    <option value="A03" selected>전산관련직</option>
+                    <option value="A03">전산관련직</option>
                     <option value="A05">연구전문직</option>
                     <option value="A07">각종학교학생</option>
                     <option value="A09">일반자영업</option>

@@ -12,19 +12,19 @@
 		<table width="600" border="1" cellspacing="1" class="table" >
 		<tr>
 			<th width="80" height="30" class="tableth">작성자</th>
-			<td align="left" class="tabletd"><input type="text" name="wname" value="홍길동" size="20" maxlength="20"></td>
+			<td align="left" class="tabletd"><input type="text" name="wname" value="" size="20" maxlength="20"></td>
 		</tr>
 		<tr>
 			<th height="30" class="tableth">제목</th>
-			<td align="left" class="tabletd"><input type="text" name="subject" size="50" value="무궁화꽃이 피었습니다"></td>
+			<td align="left" class="tabletd"><input type="text" name="subject" size="50" value=""></td>
 		</tr>
 		<tr>
 			<th class="tableth">내용</th>
-			<td align="left" class="tabletd"><textarea name="content" rows="10" cols="70">다음주 월요일 휴강!! Why? 석가탄신일</textarea></td>
+			<td align="left" class="tabletd"><textarea name="content" rows="10" cols="70"></textarea></td>
 		</tr>
 		<tr>
 			<th height="30" class="tableth">비밀번호</th>
-			<td align="left" class="tabletd"><input type="password" name="passwd" value="1234" maxlength="10" size="20"></td>
+			<td align="left" class="tabletd"><input type="password" name="passwd" value="" maxlength="10" size="20"></td>
 		</tr>
 		</table>
 		<br/>
