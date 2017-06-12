@@ -7,6 +7,8 @@
 
 <jsp:useBean id="dto" class="www.bbs.BbsDTO" scope="page"/>
 <jsp:useBean id="dao" class="www.bbs.BbsDAO" scope="page"/>
+<jsp:useBean id="mvcbbsDto" class="my.board.BoardDataBean" scope="page"/>
+<jsp:useBean id="phpbbsDto" class="php.board.BoardDataBean" scope="page"/>
 
 <% request.setCharacterEncoding("euc-kr"); %>
 

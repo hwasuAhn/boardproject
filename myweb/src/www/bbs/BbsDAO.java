@@ -66,6 +66,47 @@ public class BbsDAO {
 		return res;
 	}  //insert() end
 	
+	public int phpinsert(php.board.BoardDataBean dto) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="";
+		int res=0;
+		
+		try {
+			con=dbconn.getConnection();  //DB연결
+			
+			//1)그룹번호 생성
+			//bbsno칼럼 값 중에서 제일 큰값+1
+			sql+=" SELECT max(num) From php_board ";  //쿼리문 작성
+			pstmt=con.prepareStatement(sql);  //쿼리문 생성
+			rs=pstmt.executeQuery();  //쿼리문 실행
+			int grpno=0;
+			if(rs.next())
+			{
+				grpno=rs.getInt(1)+1;
+			}
+			
+			//2)레코드 추가
+			sql="";  //sql변수 값 초기화
+			sql+=" INSERT INTO php_board(num, writer, subject, content, email, ip, ref, re_step, re_level, reg_date) ";
+			sql+=" VALUES(php_board_seq.nextval, ?, ?, ?, ?, ?, ?, 0, 0, sysdate) ";
+			pstmt=con.prepareStatement(sql);			
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setString(5, dto.getIp());
+			pstmt.setInt(6, grpno);
+			res=pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}  //try end
+		return res;
+	}  //insert() end
+	
 	public ArrayList<BbsDTO> list() {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -88,6 +129,49 @@ public class BbsDAO {
 				do {
 					dto=new BbsDTO();
 					dto.setBbsno(rs.getInt("bbsno"));
+					/*dto.setWname(rs.getString("wname"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setContent(rs.getString("content"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setReadcnt(rs.getInt("readcnt"));
+					dto.setRegdt(rs.getString("regdt"));
+					dto.setGrpno(rs.getInt("grpno"));
+					dto.setIndent(rs.getInt("indent"));
+					dto.setAnsnum(rs.getInt("ansnum"));
+					dto.setIp(rs.getString("ip"));*/
+					list.add(dto);
+				} while(rs.next());
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return list;
+	}  //list() end
+	
+	public ArrayList<php.board.BoardDataBean> phplist() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="";
+		ArrayList<php.board.BoardDataBean> list=null;
+		php.board.BoardDataBean dto=null;
+		
+		try {
+			con=dbconn.getConnection();  //DB연결
+			
+			//1차 : 그룹번호는 내림차순 2차 : 글순서는 오름차순 정렬
+			sql+=" SELECT * From php_board ";  //쿼리문 작성
+			sql+=" ORDER BY ref DESC, re_level ASC ";
+			pstmt=con.prepareStatement(sql);  //쿼리문 생성
+			rs=pstmt.executeQuery();  //쿼리문 실행
+			if(rs.next())
+			{
+				list=new ArrayList<php.board.BoardDataBean>();
+				do {
+					dto=new php.board.BoardDataBean();
+					dto.setNum(rs.getInt("num"));
 					/*dto.setWname(rs.getString("wname"));
 					dto.setSubject(rs.getString("subject"));
 					dto.setContent(rs.getString("content"));
@@ -288,6 +372,49 @@ public class BbsDAO {
 		return dto;		
 	}  //read end
 	
+	//상세보기
+		public php.board.BoardDataBean phpread(int num) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql="";
+			php.board.BoardDataBean dto=null;
+			
+			try {
+				phpincrement(num);
+				con=dbconn.getConnection();  //DB연결
+				sql+=" SELECT * FROM php_board ";
+				sql+=" WHERE num=? ";
+				pstmt=con.prepareStatement(sql);  //쿼리문 생성
+				pstmt.setInt(1, num);
+				rs=pstmt.executeQuery();  //쿼리문 실행			
+				if(rs.next())
+				{	
+					dto=new php.board.BoardDataBean();
+					dto.setNum(rs.getInt("num"));
+					dto.setWriter(rs.getString("writer"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setContent(rs.getString("content"));
+					dto.setEmail(rs.getString("email"));
+					dto.setReadcount(rs.getInt("readcount"));
+					dto.setReg_date(rs.getTimestamp("reg_date"));
+					dto.setRef(rs.getInt("ref"));
+					dto.setRe_step(rs.getInt("re_step"));
+					dto.setRe_level(rs.getInt("re_level"));
+					dto.setIp(rs.getString("ip"));
+				}
+				else
+				{
+					System.out.println("관련 게시글 없음");
+				}
+			} catch(Exception e) {
+				System.out.println(e);
+			} finally {
+				DBClose.close(con, pstmt, rs);
+			}  //try end
+			return dto;		
+		}  //read end
+	
 	//조회수 증가
 	public void increment(int bbsno) {
 		Connection con=null;
@@ -313,6 +440,32 @@ public class BbsDAO {
 			DBClose.close(con, pstmt);
 		}  //try end
 	}  //increment() end
+	
+	//조회수 증가
+		public void phpincrement(int num) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			String sql="";
+			int res=0;
+			
+			try {
+				con=dbconn.getConnection();  //DB연결
+				sql+=" UPDATE php_board ";
+				sql+=" SET readcount=readcount+1 ";
+				sql+=" WHERE num=? ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				res=pstmt.executeUpdate();
+				if(res==0)
+				{
+					System.out.println("조회수 증가 실패");
+				}
+			} catch(Exception e) {
+				System.out.println(e);
+			} finally {
+				DBClose.close(con, pstmt);
+			}  //try end
+		}  //increment() end
 	
 	public int reply(BbsDTO dto) {
 		Connection con=null;
@@ -582,6 +735,70 @@ public class BbsDAO {
     	}    	
     	return list; 
 	}  //list(nowPage) end
+	
+	//현재 페이지 목록
+		public ArrayList<php.board.BoardDataBean> phplist(int nowPage) {
+			Connection con=null;
+	    	PreparedStatement pstmt=null;
+	    	ResultSet rs=null;
+	    	StringBuffer sql=new StringBuffer();
+	    	ArrayList<php.board.BoardDataBean> list=new ArrayList<php.board.BoardDataBean>();
+	    	php.board.BoardDataBean dto=new php.board.BoardDataBean();
+	    	
+			/* 주어진 페이지의 시작 레코드 번호
+			조건: 페이지 시작 번호는 0부터 시작
+			레코드 번호도 0부터 시작
+			   
+			 1페이지: 0 * 10 = 0부터 시작
+			 2페이지: 1 * 10 = 10부터 시작 
+			 3페이지: 2 * 10 = 20부터 시작
+			 4페이지: 3 * 10 = 30부터 시작
+			*/
+	    	int beginOfPage=beginOfPage(nowPage);
+	    	
+	    	try{
+	    		con=dbconn.getConnection();  
+	    		
+	            // ---------------------------------------------------
+	            // 레코드를 추출할 범위 생성
+	            // ---------------------------------------------------
+	            // 1 페이지:  1 ~ 12   WHERE r >= 1 and r <= 12
+	            // 2 페이지: 13 ~ 24  WHERE r >= 13 and r <= 24
+	            int startnum=beginOfPage;  // 1
+	            int endnum=(beginOfPage + this.numPerPage) - 1;
+	            String range="r >= " + startnum + " and r <= " + endnum;
+
+	            sql.append(" SELECT num, writer, subject, ref, re_step, re_level, reg_date, readcount, ip, r");
+	            sql.append(" FROM(");
+	            sql.append("           SELECT num, writer, subject, ref, re_step, re_level, reg_date, readcount, ip, rownum as r");
+	            sql.append("           FROM (");
+	            sql.append("                      SELECT num, writer, subject, ref, re_step, re_level, reg_date, readcount, ip");
+	            sql.append("                      FROM php_board ");
+	            sql.append("                      ORDER BY ref DESC, re_level ASC");
+	            sql.append("                      )");
+	            sql.append("            )");
+	            sql.append(" WHERE " + range); // WHERE r >= 1 and r <= 12
+	            pstmt = con.prepareStatement(sql.toString());
+	            rs = pstmt.executeQuery();
+	            
+	            while (rs.next() == true) {            
+	                dto = new php.board.BoardDataBean();               
+	                dto.setNum(rs.getInt("num")); 
+	                dto.setWriter(rs.getString("writer"));
+	                dto.setSubject(rs.getString("subject"));
+	                dto.setRe_step(rs.getInt("re_step"));
+	                dto.setReg_date(rs.getTimestamp("reg_date"));
+	                dto.setReadcount(rs.getInt("readcount"));
+
+	                list.add(dto);
+	            }            
+	    	} catch(Exception e) {
+	    		System.out.println(e);
+	    	} finally{
+	    		DBClose.close(con,pstmt,rs);
+	    	}    	
+	    	return list; 
+		}  //list(nowPage) end
 	
 	//제목 검색 페이지 목록
 		public ArrayList<BbsDTO> listSerch(int nowPage, String serchTxt, String key) {

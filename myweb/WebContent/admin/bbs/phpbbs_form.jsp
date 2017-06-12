@@ -30,11 +30,15 @@
 <body>
 	<div align="center">
 	* 글 작성 * <br/>
-	<form method="post" action="bbs_ins.jsp">
+	<form method="post" action="phpbbs_ins.jsp">
 		<table width="600" border="1" cellspacing="1" class="table" >
 		<tr>
 			<th width="80" height="30" class="tableth">작성자</th>
-			<td align="left" class="tabletd"><input type="text" name="wname" value="관리자" size="20" maxlength="20" readonly="readonly"></td>
+			<td align="left" class="tabletd"><input type="text" name="writer" value="관리자" size="20" maxlength="20" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th width="80" height="30" class="tableth">이메일</th>
+			<td align="left" class="tabletd"><input type="text" name="email" value="webmaster@admin.com" size="20" maxlength="20" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<th height="30" class="tableth">제목</th>
@@ -43,10 +47,6 @@
 		<tr>
 			<th class="tableth">내용</th>
 			<td align="left" class="tabletd"><textarea name="content" rows="10" cols="70"></textarea></td>
-		</tr>
-		<tr>
-			<th height="30" class="tableth">비밀번호</th>
-			<td align="left" class="tabletd"><input type="password" name="passwd" value="" maxlength="10" size="20"></td>
 		</tr>
 		</table>
 		<br/>
