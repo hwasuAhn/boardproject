@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title> bbs_form.jsp </title>
+<title> bbs_rep.jsp </title>
 <link rel="stylesheet" type="text/css" href="../../css/mystyle.css"/>
 <style type='text/css'>
 	.table{
@@ -29,9 +29,11 @@
 </head>
 <body>
 	<div align="center">
-	* 글 작성 * <br/>
-	<form method="post" action="phpbbs_ins.jsp">
-		<table width="600" border="1" cellspacing="1" class="table" >
+	* 답변쓰기 *<br/>
+	<form method="post" action="phpbbs_repok.jsp">
+		<input type="hidden" name="num" value="<%=request.getParameter("num")%>">
+		<input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage")%>">
+		<table width="600" border="1" cellspacing="1" class="table">
 		<tr>
 			<th width="80" height="30" class="tableth">작성자</th>
 			<td align="left" class="tabletd"><input type="text" name="writer" value="관리자" size="20" maxlength="20" readonly="readonly"></td>
@@ -42,7 +44,7 @@
 		</tr>
 		<tr>
 			<th height="30" class="tableth">제목</th>
-			<td align="left" class="tabletd"><input type="text" name="subject" size="50" value=""></td>
+			<td align="left" class="tabletd"><input type="text" name="subject" size="68" value=""></td>
 		</tr>
 		<tr>
 			<th class="tableth">내용</th>
@@ -53,14 +55,14 @@
 		<table border="0" cellpadding="0" cellspacing="0" style="width:600px; margin-top:10px;">
 		<tr>
 			<td align="left" width="20" >
-        	<a href='phpbbs_list.jsp'><img src='../../images/bt_list.gif' border='0'></a>
+				<a href="phpbbs_list.jsp?nowPage=<%=request.getParameter("nowPage")%>"><img src="../../images/bt_list.gif"/></a>
 			</td>
-			<td style='text-align:center;'>			
-			  <input type="submit" value="추가" class="btn">
+			<td style='text-align:center;'>
+			  <input type="submit" value="답변" class="btn">
 			  <input type="reset" value="취소" class="btn">
 			</td>
 		</tr>
-		</table>	
+		</table>
 	</form>
 	</div>
 </body>

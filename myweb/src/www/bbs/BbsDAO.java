@@ -526,6 +526,65 @@ public class BbsDAO {
 		return res;
 	}  //reply() end
 	
+	public int phpreply(php.board.BoardDataBean dto) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		StringBuffer sql=new StringBuffer();
+		int res=0;
+		
+		try {
+			con=dbconn.getConnection();  //DB연결
+			
+			//1)부모글 정보가져오기
+			//	그룹번호 : 부모 그룹번호와 동일하게
+			//	들여쓰기 : 부모글 들여쓰기 + 1
+			//	글순서 : 부모글순서 + 1
+			sql.append(" SELECT ref, re_step, re_level FROM php_board ");
+			sql.append(" WHERE num=? ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, dto.getNum());
+			rs=pstmt.executeQuery();
+			int ref=0, re_step=0, re_level=0;
+			if(rs.next())
+			{
+				ref=rs.getInt("ref");  //그룹번호
+				re_step=rs.getInt("re_step")+1;  //들여쓰기
+				re_level=rs.getInt("re_level")+1;  //글순서
+			}  //입력자료 완성
+			
+			//2)같은 그룹내에서 글순서 수정하기
+			sql.delete(0, sql.length());  //1단계에서 사용했던 쿼리문 삭제
+			sql.append(" UPDATE php_board ");
+			sql.append(" SET re_level=re_level+1 ");
+			sql.append(" WHERE ref=? AND re_level>=? ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, ref);
+			pstmt.setInt(2, re_level);
+			pstmt.executeUpdate();
+			
+			//3)답변글 추가
+			sql.delete(0, sql.length());  //2단계에서 사용했던 쿼리문 삭제
+			sql.append(" INSERT INTO php_board(num, writer, subject, content, email, ip, ref, re_step, re_level, reg_date) ");
+			sql.append(" VALUES(php_board_seq.nextval, ?, ?, ?, ?, ?, ?, ? ,?, sysdate) ");
+			pstmt=con.prepareStatement(sql.toString());			
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setString(5, dto.getIp());
+			pstmt.setInt(6, ref);
+			pstmt.setInt(7, re_step);
+			pstmt.setInt(8, re_level);
+			res=pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}  //try end
+		return res;
+	}  //reply() end
+	
 	//삭제
 	public int delete(BbsDTO dto) {
 		Connection con=null;

@@ -8,9 +8,9 @@
 			<table width="100%" height="30" border="0">
 			<tr>
 				<td class="footer">
-					Copyright &copy; 2013 by S.H Song
+					Copyright &copy; 2017 by Devcomu
 					<br/>
-				 	All Rights Reserved.   ggaggungss@naver.com
+				 	All Rights Reserved.   webmaster@devecomu.com
 				</td>
 			</tr>
 			</table>
