@@ -20,7 +20,7 @@ function Go_File(filenm)
  * 게시판관리 *
  <FORM name=myform METHOD=POST>
 <INPUT TYPE="button" VALUE="익명 게시판" ONCLICK="Go_File('bbs_list.jsp')">	
-<INPUT TYPE="button" VALUE="JSP 개발자 게시판" ONCLICK="Go_File('jspbbs_list.jsp')">	
+<INPUT TYPE="button" VALUE="JSP 개발자 게시판" ONCLICK="Go_File('list.do')">	
 <INPUT TYPE="button" VALUE="PHP 개발자 게시판" ONCLICK="Go_File('phpbbs_list.jsp')">	
 <!--  
 <INPUT TYPE="button" VALUE="첨부형 게시판" ONCLICK="Go_File('pds_list.jsp')">	

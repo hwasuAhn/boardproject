@@ -64,7 +64,7 @@
           </tr>
           <tr>  
             <th class="tableth" align="right">우편번호</th>
-             <td class="tabletd" align="left"><input type="text" name="zipcode" size="10" value='' readonly>
+             <td class="tabletd" align="left"><input type="text" id="zipcode" name="zipcode" size="10" value='' readonly>
                  <input type="button" value="우편번호찾기"  class="btn"
                        onclick="javascript:zipCheck()"></td>
              <td class="tabletd" align="left">우편번호를 검색 하세요.</td>
@@ -72,7 +72,7 @@
           <tr>  
             <th class="tableth" align="right">주소</th>
              <td class="tabletd" align="left">
-            <input type="text" name="address1" size="45" value=''><br/>
+            <input type="text" id="address1" name="address1" size="45" value=''><br/>
             <input type="text" name="address2" size="45" value=''>
             </td>
              <td class="tabletd" align="left">주소를 적어 주세요.</td>
@@ -106,9 +106,12 @@
         <input type="button" value="되돌아가기" onclick="javascript:location.href='loginForm.do'" class="btn"/>
     </div>
 	</form>
+	<script src="http://code.jquery.com/jquery-latest.js"></script> 
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 	function zipCheck() {
-		var zipwin=window.open("zipCheckForm.do", "winzip", "width=450, height=350");
+		//var zipwin=window.open("zipCheckForm.do", "winzip", "width=450, height=350");
+		openDaumPostcode();
 	}
 	
 	function emailCheck(email) {
@@ -284,6 +287,17 @@
 		
 		frm.submit();
 	}
+	
+	function openDaumPostcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+				// 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+				document.getElementById('zipcode').value = data.zonecode;			
+				document.getElementById('address1').value = data.address;
+			}
+		}).open();
+	} 
 	</script>
 	<!-- 본문 끝 -->
 </div>
