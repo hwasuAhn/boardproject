@@ -9,7 +9,13 @@
 <body>
 <center>
   <FORM METHOD=POST ACTION="adminProc.jsp">
+  	<table align="center">
+  		<tr><td height="50"></td>
+  	</table>
 	<TABLE border=1 cellspacing="0" cellpadding="0">
+	<tr>
+		<td colspan="2" align="center"><h2>Devcomu</h2></td>
+	</tr>
 	<TR>
 		<TD colspan=2 align=center>* 관리자페이지 로그인 *</TD>
 	</TR>

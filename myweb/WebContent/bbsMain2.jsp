@@ -57,7 +57,7 @@
 			</tr>
 			<tr bgcolor="#99ccff"><td colspan="2" height="1"></td></tr>
 			<tr>
-				<td><a href="/myweb/index.jsp"><img src="../images/logo.gif"/></a></td>
+				<td><a href="/myweb/index.jsp"><img src="../images/logo.png"/></a></td>
 				<td><img src="../images/visual_img.jpg"/></td>
 			</tr>
 			<tr bgcolor="#99ccff"><td colspan="2" height="1"></td></tr>

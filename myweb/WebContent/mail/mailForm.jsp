@@ -11,7 +11,7 @@
 	<table border="0" cellpadding="2" cellspacing="2" class="table" align="center">
 	<tr>
 	  <th class="tableth">받는 사람</th>
-	  <td class="tabletd"><input type="text" name="to" size="61" value='webmaster@rogbatoni.cafe24.com'></td>
+	  <td class="tabletd"><input type="text" name="to" size="61" value='webmaster@devcomu.com'></td>
 	</tr><tr>
 	  <th class="tableth">보내는 사람</th>
 	  <td class="tabletd"><input type="text" name="from" size="61" value=''></td>

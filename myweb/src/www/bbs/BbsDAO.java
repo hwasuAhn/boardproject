@@ -23,6 +23,56 @@ public class BbsDAO {
 	/** 블럭당 출력 페이지 수 */
 	private int pagePerBlock=10;
 
+	public int countList() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+		
+		try {
+			con = dbconn.getConnection();
+			
+			sql += "select count(*) from tb_bbs";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	public int phpcountList() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+		
+		try {
+			con = dbconn.getConnection();
+			
+			sql += "select count(*) from php_board";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return count;
+	}
+	
 	//비지니스 로직 구현
 	//행축
 	public int insert(BbsDTO dto) {
@@ -609,6 +659,27 @@ public class BbsDAO {
 	}  //delete() end
 	
 	//관리자 삭제
+	public int phpadmindelete(php.board.BoardDataBean dto) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		String sql="";
+		int res=0;
+		
+		try {			
+			con=dbconn.getConnection();  //DB연결			
+			sql+=" DELETE FROM php_board ";
+			sql+=" WHERE num=? ";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getNum());
+			res=pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt);
+		}  //try end
+		return res;
+	}  //admindelete() end
+	
 	public int admindelete(BbsDTO dto) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -697,6 +768,38 @@ public class BbsDAO {
 		return dto;
 	}  //adminupdateform() end
 	
+	public php.board.BoardDataBean phpadminupdateform(php.board.BoardDataBean dto) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="";
+		
+		try {
+			con=dbconn.getConnection();  //DB연결
+			sql+=" SELECT writer, subject, content, email FROM php_board";
+			sql+=" WHERE num=? ";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getNum());
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				dto.setWriter(rs.getString("writer"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setEmail(rs.getString("email"));
+			}
+			else
+			{
+				dto=null;
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}  //try end
+		return dto;
+	}  //adminupdateform() end
+	
 	//수정
 	public boolean update(BbsDTO dto) {
 		Connection con=null;
@@ -717,6 +820,38 @@ public class BbsDAO {
 			pstmt.setString(4, dto.getPasswd());
 			pstmt.setString(5, dto.getIp());
 			pstmt.setInt(6, dto.getBbsno());
+			res=pstmt.executeUpdate();
+			if(res==1)
+			{
+				flag=true;
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			DBClose.close(con, pstmt);
+		}  //try end
+		return flag;
+	}  //update() end
+	
+	public boolean phpupdate(php.board.BoardDataBean dto) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		String sql="";
+		int res=0;
+		boolean flag=false;
+		
+		try {
+			con=dbconn.getConnection();  //DB연결
+			sql+=" UPDATE php_board ";
+			sql+=" SET writer=?, subject=?, content=?, email=?, ip=? ";
+			sql+=" WHERE num=? ";
+			pstmt=con.prepareStatement(sql);			
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setString(5, dto.getIp());
+			pstmt.setInt(6, dto.getNum());
 			res=pstmt.executeUpdate();
 			if(res==1)
 			{
@@ -1014,7 +1149,7 @@ public class BbsDAO {
         int pagePerBlock=this.pagePerBlock; //블럭당 페이지 수 기본값은 10페이지
         
         // 검색 레코드수 산출
-        int searchCount=recordCount();
+        int searchCount=recordCount(fileName);
         // 전체 페이지 산출
         int totalPage=pageCount(searchCount);
         // 전체 블럭 산출
@@ -1085,16 +1220,23 @@ public class BbsDAO {
     }  //paging() end
     
     //레코드 갯수
-    public int recordCount()
+    public int recordCount(String fileName)
     {
     	Connection con=null;
     	PreparedStatement pstmt=null;
     	ResultSet rs=null;
     	String sql="";
+    	String tableName = "";
     	int res=0;
+    	if(fileName == "bbs_list.jsp") {
+    		tableName = "tb_bbs";
+    	} else if(fileName == "phpbbs_list.jsp") {
+    		tableName = "php_board";
+    	}
     	try{
     		con=dbconn.getConnection();
-    		sql="SELECT count(*) FROM tb_bbs";
+    		sql="SELECT count(*) FROM " + tableName;
+    		System.out.println(sql);
     		pstmt=con.prepareStatement(sql);
     		rs=pstmt.executeQuery();
     		if(rs.next()){

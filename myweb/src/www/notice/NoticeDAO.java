@@ -22,6 +22,31 @@ public class NoticeDAO {
 	/** 블럭당 출력 페이지 수 */
 	private int pagePerBlock=10;
 	
+	public int countList() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+		
+		try {
+			con = dbconn.getConnection();
+			
+			sql += "select count(*) from tb_notice";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return count;
+	}
+	
 	public ArrayList<NoticeDTO> list() {
 		Connection con=null;
 		PreparedStatement pstmt=null;

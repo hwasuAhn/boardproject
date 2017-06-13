@@ -13,18 +13,18 @@ public class MemberMgr {
 	ConnectionMgr dbconn=null;  //DBConnect dbconn=null;
 	MemberDAO dao=null;
 	
-	/** ÆäÀÌÁö´ç Ãâ·ÂÇÒ ·¹ÄÚµå ¼ö */
+	/** í˜ì´ì§€ë‹¹ ì¶œë ¥í•  ë ˆì½”ë“œ ìˆ˜ */
 	public int numPerPage=10;
-	/** ºí·°´ç Ãâ·Â ÆäÀÌÁö ¼ö */
+	/** ë¸”ëŸ­ë‹¹ ì¶œë ¥ í˜ì´ì§€ ìˆ˜ */
 	private int pagePerBlock=10;
 	
 	public MemberMgr() {
-		//DB¿¬°á°ªÀÌ ¾øÀ» °æ¿ì¿¡¸¸ °´Ã¼»ı¼º
+		//DBì—°ê²°ê°’ì´ ì—†ì„ ê²½ìš°ì—ë§Œ ê°ì²´ìƒì„±
 		if(dbconn==null)
 		{
 			dbconn=new ConnectionMgr();
 		}
-	}  //±âº» »ı¼ºÀÚ
+	}  //ê¸°ë³¸ ìƒì„±ì
 	
 	synchronized public MemberDAO getDAO() {
 		if(dao==null)
@@ -34,9 +34,9 @@ public class MemberMgr {
 		return dao;
 	}  //getDAO() end
 	
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	public int insert(MemberDTO dto) {
-		Connection con=dbconn.getConnection();  //DB¿¬°á
+		Connection con=dbconn.getConnection();  //DBì—°ê²°
 		int res=0;
 		try {
 			res=getDAO().insert(con, dto);
@@ -48,9 +48,9 @@ public class MemberMgr {
 		return res;
 	}  //insert() end
 	
-	//¾ÆÀÌµğ Áßº¹ È®ÀÎ
+	//ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
 	public int duplicatedid(String id) {
-		Connection con=dbconn.getConnection();  //DB¿¬°á
+		Connection con=dbconn.getConnection();  //DBì—°ê²°
 		int res=0;
 		try {
 			res=getDAO().duplicatedid(con, id);
@@ -62,9 +62,9 @@ public class MemberMgr {
 		return res;
 	}  //duplicatedid() end
 	
-	//ÀÌ¸ŞÀÏ Áßº¹ È®ÀÎ
+	//ì´ë©”ì¼ ì¤‘ë³µ í™•ì¸
 		public int duplicatedemail(String email) {
-			Connection con=dbconn.getConnection();  //DB¿¬°á
+			Connection con=dbconn.getConnection();  //DBì—°ê²°
 			int res=0;
 			try {
 				res=getDAO().duplicatedemail(con, email);
@@ -76,7 +76,7 @@ public class MemberMgr {
 			return res;
 		}  //duplicatedemail() end
 		
-		//È¸¿ø ·Î±×ÀÎ
+		//íšŒì› ë¡œê·¸ì¸
 		public MemberDTO loginproc(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			//int res=0;
@@ -90,7 +90,7 @@ public class MemberMgr {
 			return dto;
 		}  //loginproc() end
 		
-		//°ü¸®ÀÚ È¸¿ø ·Î±×ÀÎ
+		//ê´€ë¦¬ì íšŒì› ë¡œê·¸ì¸
 			public MemberDTO adminloginproc(MemberDTO dto) {
 				Connection con=dbconn.getConnection();
 				//int res=0;
@@ -104,7 +104,7 @@ public class MemberMgr {
 				return dto;
 			}  //loginproc() end
 	
-		//È¸¿ø Å»Åğ
+		//íšŒì› íƒˆí‡´
 		public int delete(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			int res=0;
@@ -118,7 +118,7 @@ public class MemberMgr {
 			return res;
 		}  //delete() end
 		
-		//°ü¸®ÀÚ È¸¿ø Å»Åğ
+		//ê´€ë¦¬ì íšŒì› íƒˆí‡´
 		public int delete(String id) {
 			Connection con=dbconn.getConnection();
 			int res=0;
@@ -132,7 +132,7 @@ public class MemberMgr {
 			return res;
 		}  //delete(id) end
 		
-		//È¸¿øÁ¤º¸ ¼öÁ¤Æû
+		//íšŒì›ì •ë³´ ìˆ˜ì •í¼
 		public MemberDTO updateform(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			//int res=0;
@@ -146,7 +146,7 @@ public class MemberMgr {
 			return dto;
 		}  //updateform() end
 		
-		//È¸¿øÁ¤º¸ ¼öÁ¤
+		//íšŒì›ì •ë³´ ìˆ˜ì •
 		public int updateproc(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			int res=0;
@@ -160,7 +160,7 @@ public class MemberMgr {
 			return res;
 		}  //updateproc() end
 		
-		//°ü¸®ÀÚ È¸¿øÁ¤º¸ ¼öÁ¤Æû
+		//ê´€ë¦¬ì íšŒì›ì •ë³´ ìˆ˜ì •í¼
 		public MemberDTO editform(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			//int res=0;
@@ -174,7 +174,7 @@ public class MemberMgr {
 			return dto;
 		}  //updateform() end
 		
-		//°ü¸®ÀÚ È¸¿øÁ¤º¸ ¼öÁ¤
+		//ê´€ë¦¬ì íšŒì›ì •ë³´ ìˆ˜ì •
 		public int update(MemberDTO dto) {
 			Connection con=dbconn.getConnection();
 			int res=0;
@@ -188,9 +188,9 @@ public class MemberMgr {
 			return res;
 		}  //delete(id) end
 		
-		//È¸¿ø ¸®½ºÆ®
+		//íšŒì› ë¦¬ìŠ¤íŠ¸
 		public ArrayList<MemberDTO> list() {
-			Connection con=dbconn.getConnection();  //DB¿¬°á
+			Connection con=dbconn.getConnection();  //DBì—°ê²°
 			ArrayList<MemberDTO> list=null;
 			
 			try {
@@ -203,7 +203,7 @@ public class MemberMgr {
 			return list;
 		}  //list() end
 		
-		//È¸¿ø ¸®½ºÆ® ÆäÀÌÁö
+		//íšŒì› ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€
 		/*public ArrayList<MemberDTO> list(int nowPage) {
 			Connection con=dbconn.getConnection();
 			int res=0;
@@ -227,14 +227,14 @@ public class MemberMgr {
 	    	ArrayList<MemberDTO> list=new ArrayList<MemberDTO>();
 	    	MemberDTO dto=new MemberDTO();
 	    	
-			/* ÁÖ¾îÁø ÆäÀÌÁöÀÇ ½ÃÀÛ ·¹ÄÚµå ¹øÈ£
-			Á¶°Ç: ÆäÀÌÁö ½ÃÀÛ ¹øÈ£´Â 0ºÎÅÍ ½ÃÀÛ
-			·¹ÄÚµå ¹øÈ£µµ 0ºÎÅÍ ½ÃÀÛ
+			/* ì£¼ì–´ì§„ í˜ì´ì§€ì˜ ì‹œì‘ ë ˆì½”ë“œ ë²ˆí˜¸
+			ì¡°ê±´: í˜ì´ì§€ ì‹œì‘ ë²ˆí˜¸ëŠ” 0ë¶€í„° ì‹œì‘
+			ë ˆì½”ë“œ ë²ˆí˜¸ë„ 0ë¶€í„° ì‹œì‘
 			   
-			 1ÆäÀÌÁö: 0 * 10 = 0ºÎÅÍ ½ÃÀÛ
-			 2ÆäÀÌÁö: 1 * 10 = 10ºÎÅÍ ½ÃÀÛ 
-			 3ÆäÀÌÁö: 2 * 10 = 20ºÎÅÍ ½ÃÀÛ
-			 4ÆäÀÌÁö: 3 * 10 = 30ºÎÅÍ ½ÃÀÛ */
+			 1í˜ì´ì§€: 0 * 10 = 0ë¶€í„° ì‹œì‘
+			 2í˜ì´ì§€: 1 * 10 = 10ë¶€í„° ì‹œì‘ 
+			 3í˜ì´ì§€: 2 * 10 = 20ë¶€í„° ì‹œì‘
+			 4í˜ì´ì§€: 3 * 10 = 30ë¶€í„° ì‹œì‘ */
 			
 	    	int beginOfPage=beginOfPage(nowPage);
 	    	
@@ -242,10 +242,10 @@ public class MemberMgr {
 	    		con=dbconn.getConnection();  
 	    		
 	            // ---------------------------------------------------
-	            // ·¹ÄÚµå¸¦ ÃßÃâÇÒ ¹üÀ§ »ı¼º
+	            // ë ˆì½”ë“œë¥¼ ì¶”ì¶œí•  ë²”ìœ„ ìƒì„±
 	            // ---------------------------------------------------
-	            // 1 ÆäÀÌÁö:  1 ~ 12   WHERE r >= 1 and r <= 12
-	            // 2 ÆäÀÌÁö: 13 ~ 24  WHERE r >= 13 and r <= 24
+	            // 1 í˜ì´ì§€:  1 ~ 12   WHERE r >= 1 and r <= 12
+	            // 2 í˜ì´ì§€: 13 ~ 24  WHERE r >= 13 and r <= 24
 	            int startnum=beginOfPage;  // 1
 	            int endnum=(beginOfPage + this.numPerPage) - 1;
 	            String range="r >= " + startnum + " and r <= " + endnum;
@@ -289,14 +289,14 @@ public class MemberMgr {
 		}  //list(nowPage) end
 		
 	    /**
-	     * ÆäÀÌÁöÀÇ ½ÃÀÛ·¹ÄÚµå¹øÈ£
-	     * nowPage: ÇöÀç ÆäÀÌÁö 
-	     * ÆäÀÌÁö´ç Ãâ·ÂÇÒ ·¹ÄÚµå ¼ö ¡Ú
-	     * ÇöÀç ÆäÀÌÁö ¹øÈ£ * ÆäÀÌÁö´ç ·¹ÄÚµå ¼ö
+	     * í˜ì´ì§€ì˜ ì‹œì‘ë ˆì½”ë“œë²ˆí˜¸
+	     * nowPage: í˜„ì¬ í˜ì´ì§€ 
+	     * í˜ì´ì§€ë‹¹ ì¶œë ¥í•  ë ˆì½”ë“œ ìˆ˜ â˜…
+	     * í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ * í˜ì´ì§€ë‹¹ ë ˆì½”ë“œ ìˆ˜
 	     * 1 Page = (0 * 12) + 1 --> 1
 	     * 2 Page = (1 * 12) + 1 --> 13
 	     * 3 Page = (2 * 12) + 1 --> 25
-	     * @param nowPage ÇöÀç ÆäÀÌÁö
+	     * @param nowPage í˜„ì¬ í˜ì´ì§€
 	     * @return
 	     */
 	    public int beginOfPage(int nowPage){
@@ -305,39 +305,39 @@ public class MemberMgr {
 	    
 	    public String paging(int nowPage,String fileName) {
 
-	        int pagePerBlock=this.pagePerBlock; //ºí·°´ç ÆäÀÌÁö ¼ö ±âº»°ªÀº 10ÆäÀÌÁö
+	        int pagePerBlock=this.pagePerBlock; //ë¸”ëŸ­ë‹¹ í˜ì´ì§€ ìˆ˜ ê¸°ë³¸ê°’ì€ 10í˜ì´ì§€
 	        
-	        // °Ë»ö ·¹ÄÚµå¼ö »êÃâ
+	        // ê²€ìƒ‰ ë ˆì½”ë“œìˆ˜ ì‚°ì¶œ
 	        int searchCount=recordCount();
-	        // ÀüÃ¼ ÆäÀÌÁö »êÃâ
+	        // ì „ì²´ í˜ì´ì§€ ì‚°ì¶œ
 	        int totalPage=pageCount(searchCount);
-	        // ÀüÃ¼ ºí·° »êÃâ
+	        // ì „ì²´ ë¸”ëŸ­ ì‚°ì¶œ
 	        int totalBlock=blockCount(totalPage);
-	        // ÇöÀç ºí·° »êÃâ
+	        // í˜„ì¬ ë¸”ëŸ­ ì‚°ì¶œ
 	        int nowBlock=nowBlock(nowPage);
 	        
 	        StringBuffer sb=new StringBuffer();
 	        
-	        // ÆäÀÌÂ¡ ½ÃÀÛ
-	        if(searchCount > 0) { // ·¹ÄÚµå°¡ Á¸ÀçÇÑ´Ù¸é
+	        // í˜ì´ì§• ì‹œì‘
+	        if(searchCount > 0) { // ë ˆì½”ë“œê°€ ì¡´ì¬í•œë‹¤ë©´
 	            sb.append("[<a href=./" + fileName);
 	            sb.append("?nowPage=0"); 
-	            sb.append(">Ã³À½ ÆäÀÌÁö</a>]&nbsp;");            
+	            sb.append(">ì²˜ìŒ í˜ì´ì§€</a>]&nbsp;");            
 	            
-	            // ÇöÀç ³ª¿­µÈ ÆäÀÌÁö°¡ 11ÆäÀÌÁö ÀÌ»óÀÏ °æ¿ì
-	            // ÀÌÀü 10ÆäÀÌÁö Ãâ·Â
+	            // í˜„ì¬ ë‚˜ì—´ëœ í˜ì´ì§€ê°€ 11í˜ì´ì§€ ì´ìƒì¼ ê²½ìš°
+	            // ì´ì „ 10í˜ì´ì§€ ì¶œë ¥
 	            // 0 Block:  1~10 page 
 	            // 1 Block: 11~20 page 
-	            if(nowBlock > 0) { // 1 ÀÌ»óÀÓÀ¸·Î ÀÌÀüºí·° ÀÌµ¿ °¡´É
-	                // ÀÌÀü 10°³ ¸µÅ©, ÀÌÀü ºí·°À¸·Î ÀÌµ¿
+	            if(nowBlock > 0) { // 1 ì´ìƒì„ìœ¼ë¡œ ì´ì „ë¸”ëŸ­ ì´ë™ ê°€ëŠ¥
+	                // ì´ì „ 10ê°œ ë§í¬, ì´ì „ ë¸”ëŸ­ìœ¼ë¡œ ì´ë™
 	                // 1 Block --> ((1 - 1) * 10) =  0 Block page 0 
 	                // 2 Block --> ((2 - 1) * 10) =  1 Block page 10
 	                sb.append("[<a href=./" + fileName);
 	                sb.append("?nowPage=" + ((nowBlock-1)*pagePerBlock)); // ((2-1)*10)=10
-	                sb.append(">ÀÌÀü"+ pagePerBlock+"°³</a>] ::: ");
+	                sb.append(">ì´ì „"+ pagePerBlock+"ê°œ</a>] ::: ");
 	            }
 	            
-	            // ÆäÀÌÁö ¸ñ·Ï Ãâ·Â
+	            // í˜ì´ì§€ ëª©ë¡ ì¶œë ¥
 	            for (int i = 0; i < pagePerBlock; i++) {
 	                sb.append("<a href=./" + fileName);
 	             // 1 page: ((0 * 10) + 0) = 0
@@ -347,38 +347,38 @@ public class MemberMgr {
 	                sb.append("?nowPage=" + ((nowBlock*pagePerBlock) + i));
 	                sb.append(">");
 	                
-	             // ÇöÀç ÆäÀÌÁö´Â Â÷º°È­ÇØ¼­ Ãâ·Â  
+	             // í˜„ì¬ í˜ì´ì§€ëŠ” ì°¨ë³„í™”í•´ì„œ ì¶œë ¥  
 	                if(((nowBlock * pagePerBlock) + i)==nowPage) {
 	                    sb.append("<b><u>"+((nowBlock * pagePerBlock) + i + 1)+"</u></b></a>&nbsp;");
 	                }else{
 	                    sb.append(((nowBlock * pagePerBlock) + i + 1)+"</a>&nbsp;");
 	                }
 	                
-	                // ¸¶Áö¸· ÆäÀÌÁöÀÌ¸é ÆäÀÌÁö ¹øÈ£ Ãâ·ÂÀ» Á¾·á
-	                // ÆäÀÌÁö´Â 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î +1À»ÇÏ¿© ¸¶Áö¸· ÆäÀÌÁöÀÎÁö
-	                // °Ë»ç
+	                // ë§ˆì§€ë§‰ í˜ì´ì§€ì´ë©´ í˜ì´ì§€ ë²ˆí˜¸ ì¶œë ¥ì„ ì¢…ë£Œ
+	                // í˜ì´ì§€ëŠ” 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ +1ì„í•˜ì—¬ ë§ˆì§€ë§‰ í˜ì´ì§€ì¸ì§€
+	                // ê²€ì‚¬
 	                if ((nowBlock * pagePerBlock) + i + 1 == totalPage) break;
 	            }
 	            
-	            // ´ÙÀ½ 10°³ Ãâ·Â
-	            // nowBlockÀº 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î +1À»ÇÏ¿© ºí·° ÀÌµ¿¿©ºÎ °áÁ¤
+	            // ë‹¤ìŒ 10ê°œ ì¶œë ¥
+	            // nowBlockì€ 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ +1ì„í•˜ì—¬ ë¸”ëŸ­ ì´ë™ì—¬ë¶€ ê²°ì •
 	            if ( nowBlock + 1 < totalBlock) {
-	                // ´ÙÀ½ ºí·°À¸·Î ÀÌµ¿ ¸µÅ©
+	                // ë‹¤ìŒ ë¸”ëŸ­ìœ¼ë¡œ ì´ë™ ë§í¬
 	                sb.append(" ::: [<a href=./" + fileName);
 	                sb.append("?nowPage="+((nowBlock + 1) * pagePerBlock)); // (1+1)*10
-	                sb.append(">´ÙÀ½ "+pagePerBlock+"°³</a>]");
+	                sb.append(">ë‹¤ìŒ "+pagePerBlock+"ê°œ</a>]");
 	            }
 	            
 	            sb.append("[<a href=./" + fileName);
 	            
-	            // ÆäÀÌÁö 0ºÎÅÍ ½ÃÀÛÀÓÀ¸·Î -1À» ÇÔ.
+	            // í˜ì´ì§€ 0ë¶€í„° ì‹œì‘ì„ìœ¼ë¡œ -1ì„ í•¨.
 	            sb.append("?nowPage=" + (totalPage - 1)); 
-	            sb.append(">¸¶Áö¸· ÆäÀÌÁö</a>]&nbsp;");            
+	            sb.append(">ë§ˆì§€ë§‰ í˜ì´ì§€</a>]&nbsp;");            
 	        }        
 	        return sb.toString();
 	    }  //paging() end
 	    
-	    //·¹ÄÚµå °¹¼ö
+	    //ë ˆì½”ë“œ ê°¯ìˆ˜
 	    public int recordCount()
 	    {
 	    	Connection con=null;
@@ -402,15 +402,15 @@ public class MemberMgr {
 	    }  //recordCount() end
 	    
 	    public int pageCount(int count){
-	        double _count=(double)count; // Á¤¼öÇüÀ» double·Î º¯È¯
+	        double _count=(double)count; // ì •ìˆ˜í˜•ì„ doubleë¡œ ë³€í™˜
 	        // System.out.println(_count);    // 1.0, 11.0
 	        
-	        //  1.0 / 10 --> 0.1 --> 1.0, numPerPage: ÆäÀÌÁö´ç ·¹ÄÚµå ¼ö, 10 
+	        //  1.0 / 10 --> 0.1 --> 1.0, numPerPage: í˜ì´ì§€ë‹¹ ë ˆì½”ë“œ ìˆ˜, 10 
 	        // 11.0 / 10 --> 1.1 --> 2.0 
 	        double retVal = Math.ceil( _count / this.numPerPage); 
 	        // System.out.println(retVal);    // 1.0, 2.0
 	        
-	        return (int)retVal;  // ¼Ò¼öÁ¡ Â©¶ó¹ö¸², 1, 2        
+	        return (int)retVal;  // ì†Œìˆ˜ì  ì§¤ë¼ë²„ë¦¼, 1, 2        
 	    
 	    }  //pageCount() end
 	    
@@ -424,7 +424,7 @@ public class MemberMgr {
 	    
 	    public int nowBlock(int nowPage){
 	        int retVal = nowPage / this.pagePerBlock;
-	        // ÇöÀç ºí·° = ÇöÀç ÆäÀÌÁö/ ºí·°´ç ÆäÀÌÁö ¼ö
+	        // í˜„ì¬ ë¸”ëŸ­ = í˜„ì¬ í˜ì´ì§€/ ë¸”ëŸ­ë‹¹ í˜ì´ì§€ ìˆ˜
 	        //  1 -->  1 / 10 --> 0 Block
 	        // 11 --> 11 / 10 --> 1 Block
 	        // 15 --> 15 / 10 --> 1 Block

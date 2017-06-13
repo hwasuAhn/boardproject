@@ -34,6 +34,9 @@
 	* 글 목록 *<br/>
 	<%
 		ArrayList<BoardDataBean> list=dao.phplist(nowPage);  //해당페이지만 가져오기
+		int count = dao.phpcountList();
+		int pageSize = 10;
+		int number = count - nowPage * pageSize;
 		
 		if(list==null)
 		{
@@ -56,7 +59,7 @@
 			{
 				phpbbsDto=(BoardDataBean)list.get(idx);  //ArrayList에서 한줄 가져오기
 				out.print("<tr>");
-				out.print("<td width=50 height=25 class='tabletd'>"+phpbbsDto.getNum()+"</td>");
+				out.print("<td width=50 height=25 class='tabletd'>"+number+"</td>");
 				out.print("<td td width='260' align='left' class='tabletd'>");
 				
 				//리플아이콘 출력
@@ -88,6 +91,8 @@
 				out.print("<td width='50' class='tabletd'>"+phpbbsDto.getReadcount()+"</td>");				
 				out.print("<td width='120' class='tabletd'>"+phpbbsDto.getReg_date().toString().substring(0, 10)+"</td>");
 				out.print("</tr>");
+				
+				number--;
 			}
 	%>
 	<tr>

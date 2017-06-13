@@ -33,6 +33,9 @@
 	* 글 목록 *<br/>
 	<%
 		ArrayList<BbsDTO> list=dao.list(nowPage);  //해당페이지만 가져오기
+		int count = dao.countList();
+		int pageSize = 10;
+		int number = count - nowPage * pageSize;
 		
 		if(list==null)
 		{
@@ -55,7 +58,7 @@
 			{
 				dto=(BbsDTO)list.get(idx);  //ArrayList에서 한줄 가져오기
 				out.print("<tr>");
-				out.print("<td width=50 height=25 class='tabletd'>"+dto.getBbsno()+"</td>");
+				out.print("<td width=50 height=25 class='tabletd'>"+number+"</td>");
 				out.print("<td td width='260' align='left' class='tabletd'>");
 				
 				//리플아이콘 출력
@@ -87,6 +90,8 @@
 				out.print("<td width='50' class='tabletd'>"+dto.getReadcnt()+"</td>");				
 				out.print("<td width='120' class='tabletd'>"+dto.getRegdt().substring(0, 10)+"</td>");
 				out.print("</tr>");
+				
+				number--;
 			}
 	%>
 	<tr>

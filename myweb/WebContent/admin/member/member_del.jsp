@@ -29,7 +29,7 @@
 		{
 			ArrayList<MemberDTO> list2=mgr.list();
 	%>
-	<table border="1" align="center">
+	<table border="1" cellpadding="0" cellspacing="0" align="center">
 	<tr>
 		<th>아이디</th>
 		<th>비밀번호</th>

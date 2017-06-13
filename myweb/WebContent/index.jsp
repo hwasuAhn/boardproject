@@ -158,7 +158,7 @@ if(request.getParameter("nowPage")!=null)
  //오늘 창 그만 보기가 체크되어 있지 않으면
  if(getCookie("popcookie")!="done")
 {
-	window.open("event.html", "ewin", "width=218, height=375");
+	window.open("event.html", "ewin", "width=220, height=408, top=50, left=50");
 }
  
 //쿠키값 불러오기
@@ -217,7 +217,7 @@ function getCookie(name) {
 		</tr>
 		<tr bgcolor="#99ccff"><td colspan="2" height="1"></td></tr>
 		<tr>
-			<td><a href="/myweb/index.jsp"><img src="images/logo.gif"/></a></td>
+			<td><a href="/myweb/index.jsp"><img src="images/logo.png"/></a></td>
 			<td><img src="images/visual_img.jpg"/></td>
 		</tr>
 		<tr bgcolor="#99ccff"><td colspan="2" height="1"></td></tr>
@@ -427,8 +427,9 @@ function getCookie(name) {
 		%>			            	
        				<table width="300" border='0'  cellspacing="0">
        				<tr align='center' height="21">      	
-             			<th class="tableth" >제목</th>        
-              			<th class="tableth" >작성일</th>
+             			<th class="tableth">제목</th>
+                    	<th class="tableth">작성자</th>
+                    	<th class="tableth">작성일</th>
            			 </tr>      				
     	<%
     		
@@ -437,8 +438,7 @@ function getCookie(name) {
 					mvcbbsDto=jspDTO.get(idx);  //ArrayList에서 한줄 가져오기
 					out.print("<tr>");
 					
-					out.print("<td width=250 align=left class='tabletd' height='25'>");
-					
+					out.print("<td align=left class='tabletd' height='25'>");
 					
 			 		out.print("<a href='mvc2bbs/content.do?pageNum="+nowPage+"&num="+mvcbbsDto.getNum()+"'>"+mvcbbsDto.getSubject()+"</a>");
 			 		
@@ -450,7 +450,14 @@ function getCookie(name) {
 			 		{
 			 			out.print("<img src='./images/new.gif'>");
 			 		}		 				 		
-			 		out.print("</td>");		
+			 		//조회수 10이상 hot이미지 추가
+			 		if(mvcbbsDto.getReadcount()>=10)
+			 		{
+				 		out.print("<img src='./images/hot.gif'>");
+			 		}
+			 				 		
+			 		out.print("</td>");
+					out.print("<td class='tabletd'>"+mvcbbsDto.getWriter()+"</td>");		
 					out.print(" <td width=100 class='tabletd' height='25'>"+regdt+"</td>");
 					out.print("</tr>");
 				}
@@ -470,8 +477,9 @@ function getCookie(name) {
 		%>			            	
        				<table width="300" border='0'  cellspacing="0">
        				<tr align='center' height="21">      	
-             			<th class="tableth" >제목</th>        
-              			<th class="tableth" >작성일</th>
+             			<th class="tableth">제목</th>
+                    	<th class="tableth">작성자</th>
+                    	<th class="tableth">작성일</th>
            			 </tr>      				
     	<%
     		
@@ -480,7 +488,7 @@ function getCookie(name) {
 					phpbbsDto=phpDTO.get(idx);  //ArrayList에서 한줄 가져오기
 					out.print("<tr>");
 					
-					out.print("<td width=250 align=left class='tabletd' height='25'>");
+					out.print("<td align=left class='tabletd' height='25'>");
 					
 					
 			 		out.print("<a href='mvc2bbs/phpcontent.do?pageNum="+nowPage+"&num="+phpbbsDto.getNum()+"'>"+phpbbsDto.getSubject()+"</a>");
@@ -493,7 +501,14 @@ function getCookie(name) {
 			 		{
 			 			out.print("<img src='./images/new.gif'>");
 			 		}		 				 		
-			 		out.print("</td>");		
+			 		//조회수 10이상 hot이미지 추가
+			 		if(phpbbsDto.getReadcount()>=10)
+			 		{
+				 		out.print("<img src='./images/hot.gif'>");
+			 		}
+			 				 		
+			 		out.print("</td>");
+					out.print("<td class='tabletd'>"+phpbbsDto.getWriter()+"</td>");		
 					out.print(" <td width=100 class='tabletd' height='25'>"+regdt+"</td>");
 					out.print("</tr>");
 				}
