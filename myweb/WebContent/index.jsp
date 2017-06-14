@@ -463,7 +463,7 @@ function getCookie(name) {
 					if(mvcbbsContent.length() > 13) {
 						mvcbbsContent = mvcbbsContent.substring(0, 12) + "...";
 					}
-			 		out.print("<a href='mvc2bbs/content.do?pageNum="+nowPage+"&num="+mvcbbsDto.getNum()+"'>"+mvcbbsContent+"</a>");
+			 		out.print("<a href='mvc2bbs/content.do?pageNum=1&num="+mvcbbsDto.getNum()+"'>"+mvcbbsContent+"</a>");
 			 		
 			 		//오늘 게시물에 new이미지 추가
 			 		String today=Utility.getDate();  //2013-05-01;
@@ -524,7 +524,7 @@ function getCookie(name) {
 					if(phpbbsContent.length() > 13) {
 						phpbbsContent = phpbbsContent.substring(0, 12) + "...";
 					}
-			 		out.print("<a href='mvc2bbs/phpcontent.do?id="+id+"&pageNum="+nowPage+"&num="+phpbbsDto.getNum()+"'>"+phpbbsContent+"</a>");
+			 		out.print("<a href='mvc2bbs/phpcontent.do?id="+id+"&pageNum=1"+"&num="+phpbbsDto.getNum()+"'>"+phpbbsContent+"</a>");
 			 		
 			 		//오늘 게시물에 new이미지 추가
 			 		String today=Utility.getDate();  //2013-05-01;
