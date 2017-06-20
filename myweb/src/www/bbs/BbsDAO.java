@@ -1228,7 +1228,7 @@ public class BbsDAO {
     	String sql="";
     	String tableName = "";
     	int res=0;
-    	if(fileName == "bbs_list.jsp") {
+    	if(fileName == "bbsList.jsp") {
     		tableName = "tb_bbs";
     	} else if(fileName == "phpbbs_list.jsp") {
     		tableName = "php_board";
