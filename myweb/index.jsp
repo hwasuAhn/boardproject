@@ -235,7 +235,7 @@ function getCookie(name) {
 			<img src="images/board.gif">
 			<table border="0" width="100%" bgcolor="#ffffff">
 			<tr>
-               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="notice/noticeList.jsp">공지사항</a></td>
+               <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="notice/noticeList.jsp">공지사항mmm</a></td>
             </tr>
             <tr>
                <td height="25">&nbsp;<img src="images/arrow.gif"/>&nbsp;&nbsp;<a href="./bbs/bbsList.jsp">익명 게시판</a></td>
